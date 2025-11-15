@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clases | Paper's World</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .bg-paper-primary { background-color: #1d4ed8 !important; }
+        .text-paper-primary { color: #1d4ed8 !important; }
+        .btn-paper-primary { background-color: #1d4ed8; color: white; border: none; }
+        .btn-paper-primary:hover { background-color: #163eaf; color: white; }
+        .bg-paper-secondary { background-color: #059669 !important; }
+        .text-paper-secondary { color: #059669 !important; }
+        .btn-paper-secondary { background-color: #059669; color: white; border: none; }
+        .btn-paper-secondary:hover { background-color: #047a54; color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container-fluid container-lg">
+            <a class="navbar-brand text-paper-primary fw-bold fs-4" href="{{ url_for('index') }}">Paper's World</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link [active-class-if-index]" href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link [active-class-if-disenos]" href="{{ url_for('disenos') }}">Diseños</a></li>
+                    <li class="nav-item"><a class="nav-link [active-class-if-personalizacion]" href="{{ url_for('personalizacion') }}">Personalización</a></li>
+                    <li class="nav-item"><a class="nav-link [active-class-if-aprende]" href="{{ url_for('aprende') }}">Aprende</a></li>
+                    <li class="nav-item"><a class="nav-link [active-class-if-clases]" href="{{ url_for('clases') }}">Clases</a></li>
+                    <li class="nav-item"><a class="nav-link [active-class-if-feedback]" href="{{ url_for('feedback') }}">Comentarios</a></li>
+                    <li class="nav-item"><a class="nav-link [active-class-if-tienda]" href="{{ url_for('tienda') }}">Tienda</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <main class="container my-5">
+        <h1 class="text-center mb-2 text-paper-primary">Aprende con los Expertos</h1>
+        <p class="text-center fs-5 text-muted mb-5">Únete a nuestras clases en vivo, donde la comunidad y el aprendizaje personalizado se unen.</p>
+
+        <section class="p-5 bg-light rounded-3 shadow-lg mb-5 border-start border-5 border-paper-primary">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <div class="text-paper-primary fs-1 mb-3">💬</div>
+                    <h3 class="fs-3">Clases Interactivas Online</h3>
+                    <p class="small text-muted">Plataforma: Discord</p>
+                </div>
+                <div class="col-md-8">
+                    <p class="lead">Impartimos talleres semanales a través de nuestro servidor de Discord para interacción fluida, compartir la pantalla y recibir retroalimentación instantánea.</p>
+                    <div class="d-grid gap-2 d-md-block mt-3">
+                        <a href="https://discord.gg/Kj29BqFY" target="_blank" class="btn btn-paper-primary btn-lg">Únete a Discord</a>
+                       <a href="https://discord.gg/WbUCj3tE" target="_blank" class="btn btn-paper-secondary btn-lg">Ver Calendario de Clases</a>
+                    </div>
+                    <p class="small text-muted mt-2">Próxima clase: Miércoles 7 PM (colombia). Tema: introduccion a la papiroflexia.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-5">
+            <h2 class="text-center mb-4">Acompañamiento Garantizado</h2>
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <div class="card p-4 shadow-sm h-100 border-top border-4 border-paper-secondary">
+                        <div class="text-paper-secondary fs-2 mb-2">✅</div>
+                        <h5 class="card-title">Revisión de Proyectos</h5>
+                        <p class="card-text small text-muted">Revisamos tu trabajo en tiempo real y te damos consejos específicos para mejorar tus técnicas.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 shadow-sm h-100 border-top border-4 border-paper-secondary">
+                        <div class="text-paper-secondary fs-2 mb-2">🙋</div>
+                        <h5 class="card-title">Soporte Continuo en Discord</h5>
+                        <p class="card-text small text-muted">Acceso a canales exclusivos de alumnos para resolver dudas 24/7 incluso fuera del horario de clase.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 shadow-sm h-100 border-top border-4 border-paper-secondary">
+                        <div class="text-paper-secondary fs-2 mb-2">⭐</div>
+                        <h5 class="card-title">Instructores Expertos</h5>
+                        <p class="card-text small text-muted">Aprende de diseñadores con años de experiencia que te enseñarán trucos que no encontrarás en YouTube.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="p-5 bg-gray-100 rounded-3 shadow-lg mb-5">
+            <h2 class="text-center mb-4">Talleres Presenciales</h2>
+            <div class="row g-4 align-items-center">
+                <div class="col-md-7">
+                    <p class="lead mb-4">Si te encuentras cerca de nuestro estudio, puedes inscribirte a nuestros talleres intensivos. Disfruta de un ambiente de trabajo colaborativo y utiliza nuestras herramientas profesionales.</p>
+                    <ul class="list-group list-group-flush small mb-4">
+                        <li class="list-group-item bg-transparent">Ubicación: calle 38a #3-41.</li>
+                        <li class="list-group-item bg-transparent">Duración: Fines de semana 4 horas por sesion.</li>
+                        <li class="list-group-item bg-transparent">Materiales incluidos o libres de llevar sus propios materiales.</li>
+                    </ul>
+                    <a href="https://discord.gg/vxdbYxh2" target="_blank" class="btn btn-paper-primary btn-lg">Inscribirse a Taller Presencial</a>                                
+                </div>
+                <div class="col-md-5 text-center">
+                    <div class="bg-secondary bg-opacity-10 rounded-lg d-flex justify-content-center align-items-center" style="height: 250px;">
+                    <img src="{{ url_for('static', filename='imagenes/taller_presencial.jpg') }}" 
+     onerror="this.onerror=null; this.src='https://placehold.co/400x250/d1d5db/4b5563?text=Foto+Taller';" 
+     alt="Imagen del Taller Presencial" 
+     class="img-fluid rounded shadow-sm">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-4 text-center">
+            <h2 class="fs-3 mb-4">Formas de Pago Accesibles</h2>
+            <div class="d-flex justify-content-center gap-4 fs-3">
+                <span>💰 Transferencia Local</span>
+                <span>📱 Nequi</span>
+            </div>
+            <p class="small text-paper-secondary mt-3">*Ofrecemos planes de 3 y 6 meses con descuento para alumnos recurrentes.</p>
+        </section>
+
+    </main>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-1">&copy; 2025 Paper's World. Todos los derechos reservados.</p>
+            <p class="small">
+                <a href="#" class="text-muted text-decoration-none me-3">Política de Privacidad</a>
+                <a href="#" class="text-muted text-decoration-none">Términos y Condiciones</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
