@@ -4,7 +4,7 @@ import os
 from datetime import datetime 
 from sqlalchemy import func # func para usar COUNT
 
-app = Flask(__name__)
+app = Flask (__name__)
 # Ruta  base de datos SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'site.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -174,6 +174,7 @@ def clases():
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
+        # ... (El código POST para guardar es correcto y no necesita cambios) ...
         # Capturar datos del formulario
         nombre = request.form.get('nombre_coment')
         email = request.form.get('email_coment')
@@ -193,9 +194,9 @@ def feedback():
         return redirect(url_for('feedback')) # Redirige para evitar doble envío
     
     # Si es GET cargamos todos los comentarios para mostrar
-    comentarios = Comentario.query.order_by(Comentario.fecha.desc()).all()
+    # CLAVE: Limitar a 6 y ordenar por fecha descendente (más nuevo primero)
+    comentarios = Comentario.query.order_by(Comentario.fecha.desc()).limit(6).all() 
     return render_template('feedback.html', comentarios=comentarios, active_page='feedback')
-
 
 # Ruta de Tienda
 @app.route('/tienda')
@@ -206,3 +207,4 @@ def tienda():
 if __name__ == '__main__':
     inicializar_db() 
     app.run(debug=True)
+
