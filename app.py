@@ -5,10 +5,20 @@ from datetime import datetime
 from sqlalchemy import func # func para usar COUNT
 
 app = Flask (__name__)
-# Ruta  base de datos SQLite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'site.db')
+
+# --- INICIO DE CONFIGURACIÓN DE POSTGRESQL (ÚNICA) ---
+
+# Usa tu contraseña real: 12345678
+LOCAL_POSTGRES_URL = "postgresql://postgres:12345678@127.0.0.1:5432/papers_world_db"
+
+# 1. Configurar la URI de la base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or LOCAL_POSTGRES_URL
+
+# 2. Configuración general
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'tu_clave_secreta_aqui' 
+app.config['SECRET_KEY'] = 'tu_clave_secreta_aqui'
+
+# --- FIN DE CONFIGURACIÓN DE POSTGRESQL ---
 
 db = SQLAlchemy(app)
 # --- modelo Base de Datos ---
@@ -46,11 +56,13 @@ class SolicitudPersonalizacion(db.Model):
     
 # --- Función para crear la DB ---
 def inicializar_db():
-    # Solo crea las tablas si no existen
+    # Solo crea las tablas si no existen (es necesario mantener esta línea)
     with app.app_context():
         db.create_all()
 
-        #  si la tabla está vacía
+        # [BLOQUE COMENTADO]: Se elimina la inserción automática de datos de prueba.
+        # Los datos reales ya fueron insertados manualmente en PostgreSQL.
+        """
         if Comentario.query.count() == 0:
             comentarios_ejemplo = [
                 Comentario(nombre_usuario='Ana G.', email_coment='a@test.com', calificacion=5, texto='¡El mejor diseño que he comprado!', tipo_resena='Diseño/Producto'),
@@ -61,16 +73,17 @@ def inicializar_db():
 
             # Insertar diseños prueba
             if Diseno.query.count() == 0:
-                 disenos_ejemplo = [
+                disenos_ejemplo = [
                     Diseno(nombre='Templo Japonés', categoria='Arquitectura', dificultad='Avanzado', precio=18.50),
                     Diseno(nombre='Zorro Low Poly', categoria='Animales', dificultad='Intermedio', precio=9.99),
                     Diseno(nombre='Cubo de Práctica', categoria='Básico', dificultad='Fácil', precio=0.00),
                 ]
-                 for diseno in disenos_ejemplo:
-                     db.session.add(diseno)
-            
+                for diseno in disenos_ejemplo:
+                    db.session.add(diseno)
+                
             db.session.commit()
             print("Base de datos y datos de ejemplo iniciales.")
+        """
 
 # @ app.route rutas 
 # Ruta de Inicio
@@ -80,7 +93,7 @@ def index():
     #Ordenamos por func.random() 
     try:
         # Obtener 5 diseños de forma aleatoria
-        disenos_carrusel = Diseno.query.order_by(func.random()).limit(5).all()
+        disenos_carrusel = Diseno.query.order_by(func.random()).limit(5).all() 
     except Exception as e:
         # Manejo de error si la consulta falla
         print(f"Error al cargar diseños para el carrusel: {e}")
@@ -88,8 +101,8 @@ def index():
     
     # Renderizar la plantilla disenos_carrusel
     return render_template('index.html', 
-                           active_page='index', 
-                           disenos_carrusel=disenos_carrusel)
+                            active_page='index', 
+                            disenos_carrusel=disenos_carrusel)
 
 # Ruta de diseños desde la DB
 @app.route('/disenos')
@@ -101,7 +114,7 @@ def disenos():
         Diseno.categoria, func.count(Diseno.id)
     ).group_by(Diseno.categoria).all()
 
-    # Convertir la lista de tuplasjinjaa un diccionario para facilitar el acceso en la plantilla
+    # Convertir la lista de tuplas en un diccionario para facilitar el acceso en la plantilla
     conteo_diccionario = dict(conteo_categorias)
     # También contamos el total de diseños
     total_disenos = len(todos_disenos)
@@ -146,7 +159,7 @@ def personalizacion():
 def aprende():
     if request.method == 'POST':
         # Los campos del formulario de Aprende son: link_modelo y email
-        #  nombre_cotizacion
+        #  nombre_cotizacion
         nombre = request.form.get('nombre_cotizacion')
         link_modelo = request.form.get('link_modelo')
         email_cotizacion = request.form.get('email_cotizacion')
@@ -174,7 +187,6 @@ def clases():
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
-        # ... (El código POST para guardar es correcto y no necesita cambios) ...
         # Capturar datos del formulario
         nombre = request.form.get('nombre_coment')
         email = request.form.get('email_coment')
@@ -207,4 +219,3 @@ def tienda():
 if __name__ == '__main__':
     inicializar_db() 
     app.run(debug=True)
-
