@@ -85,6 +85,24 @@ def inicializar_db():
             print("Base de datos y datos de ejemplo iniciales.")
         """
 
+# ----------------------------------------------------
+# RUTA TEMPORAL PARA CREAR LA ESTRUCTURA EN RENDER
+# IMPORTANTE: VISITAR UNA VEZ, LUEGO BORRAR ESTA RUTA
+# ----------------------------------------------------
+@app.route('/create-db-structure-now')
+def create_db_structure():
+    try:
+        # Crea todas las tablas definidas en tus modelos (Diseno, Comentario, SolicitudPersonalizacion)
+        db.create_all()
+        # Esto resolverá el error 'relation "diseno" does not exist' y las secuencias
+        return "¡Estructura de la base de datos (tablas y secuencias) creada exitosamente en Render! Proceda con la importación de datos."
+    except Exception as e:
+        return f"Error al crear la estructura de la DB: {e}"
+# ----------------------------------------------------
+# FIN DE RUTA TEMPORAL
+# ----------------------------------------------------
+
+
 # @ app.route rutas 
 # Ruta de Inicio
 @app.route('/')
@@ -101,8 +119,8 @@ def index():
     
     # Renderizar la plantilla disenos_carrusel
     return render_template('index.html', 
-                            active_page='index', 
-                            disenos_carrusel=disenos_carrusel)
+                           active_page='index', 
+                           disenos_carrusel=disenos_carrusel)
 
 # Ruta de diseños desde la DB
 @app.route('/disenos')
@@ -159,7 +177,7 @@ def personalizacion():
 def aprende():
     if request.method == 'POST':
         # Los campos del formulario de Aprende son: link_modelo y email
-        #  nombre_cotizacion
+        #  nombre_cotizacion
         nombre = request.form.get('nombre_cotizacion')
         link_modelo = request.form.get('link_modelo')
         email_cotizacion = request.form.get('email_cotizacion')
