@@ -1,307 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diseños | Paper's World</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb;
-        }
-        .text-paper-primary { color: #1d4ed8; }
-        .bg-paper-primary { background-color: #1d4ed8; }
-        .text-paper-secondary { color: #059669; }
-        .bg-paper-secondary { background-color: #059669; }
-        
-        .design-card {
-            /* Ocultamos todas las tarjetas de diseño por defecto */
-            display: none;
-            /* Añadir una transición suave para cuando se muestren */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        .design-card.active {
-            /* Las tarjetas activas se muestran */
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Estilo para que el sidebar sea más evidente y fijo */
-        .sidebar-fixed {
-            position: sticky;
-            top: 80px; /* Ajusta según la altura de tu navbar */
-            align-self: flex-start;
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'paper-primary': '#1d4ed8',
-                        'paper-secondary': '#059669',
-                    }
-                }
-            }
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseños | Paper's World</title>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .text-paper-primary { color: #1d4ed8; }
+        .bg-paper-primary { background-color: #1d4ed8; }
+        .text-paper-secondary { color: #059669; }
+        .bg-paper-secondary { background-color: #059669; }
+        
+        .design-card {
+            /* Ocultamos todas las tarjetas de diseño por defecto */
+            display: none;
+            /* Añadir una transición suave para cuando se muestren */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .design-card.active {
+            /* Las tarjetas activas se muestran */
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Estilo para que el sidebar sea más evidente y fijo */
+        .sidebar-fixed {
+            position: sticky;
+            top: 80px; /* Ajusta según la altura de tu navbar */
+            align-self: flex-start;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper-primary': '#1d4ed8',
+                        'paper-secondary': '#059669',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body>
 
-        <header>
-        <nav class="bg-white shadow-md sticky top-0 z-10">
-            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-                <a class="text-paper-primary text-2xl font-bold" href="{{ url_for('index') }}">Paper's World</a>
-                <div class="hidden md:flex space-x-6 items-center">
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('index') }}">Inicio</a>
-                    <a class="text-paper-primary font-bold border-b-2 border-paper-primary" href="{{ url_for('disenos') }}">Diseños</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('personalizacion') }}">Personalización</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('aprende') }}">Aprende</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('clases') }}">Clases</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('feedback') }}">Comentarios</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('tienda') }}">Tienda</a>
-                </div>
-                <div class="flex space-x-2">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
-            </div>
-        </nav>
-    </header>
+    <!-- Header y Navbar -->
+    <header>
+        <nav class="bg-white shadow-md sticky top-0 z-10">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <a class="text-paper-primary text-2xl font-bold" href="{{ url_for('index') }}">Paper's World</a>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('index') }}">Inicio</a>
+                    <a class="text-paper-primary font-bold border-b-2 border-paper-primary" href="{{ url_for('disenos') }}">Diseños</a>
+                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('personalizacion') }}">Personalización</a>
+                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('aprende') }}">Aprende</a>
+                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('clases') }}">Clases</a>
+                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('feedback') }}">Comentarios</a>
+                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('tienda') }}">Tienda</a>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
+            </div>
+        </nav>
+    </header>
 
-    <main class="container mx-auto my-10 px-4">
-        <h1 class="text-center mb-10 text-4xl font-extrabold text-paper-primary">Explora Nuestra Colección de Diseños</h1>
+    <main class="container mx-auto my-10 px-4">
+        <h1 class="text-center mb-10 text-4xl font-extrabold text-paper-primary">Explora Nuestra Colección de Diseños</h1>
 
-        <div class="flex flex-col md:flex-row gap-8">
-                        <aside class="w-full md:w-1/4 sidebar-fixed">
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-paper-primary">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Clasificación</h2>
-                    <ul class="space-y-1">
-                                                <li>
-                                                        <a href="#" class="block p-2 rounded-lg filter-btn" onclick="filtrarDisenos('categoria', 'Todos')">
-                                Todos los Diseños ({{ disenos|length }})
-                            </a>
-                        </li>
-                        
-                                                {% set categorias_disponibles = ['Arquitectura', 'Animales', 'Fantasia y Personajes', 'Vehiculos', 'Mecanicos y Robots', 'Otros'] %}
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Clasificación y Filtros -->
+            <aside class="w-full md:w-1/4 sidebar-fixed">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-paper-primary">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Clasificación</h2>
+                    <ul class="space-y-1">
+                        <!-- Todos los Diseños -->
+                        <li>
+                            <a href="#" class="block p-2 rounded-lg bg-paper-primary text-white font-semibold">
+                                Todos los Diseños ({{ disenos|length }})
+                            </a>
+                        </li>
+                        
+                        <!-- Categorías Dinámicas usando conteo_categorias de Flask -->
+                        {% set categorias_disponibles = ['Arquitectura', 'Animales', 'Fantasia y Personajes', 'Vehiculos', 'Mecanicos y Robots', 'Otros'] %}
 
-                        {% for cat in categorias_disponibles %}
-                            {# Uso de .get(cat, 0) para obtener el conteo del diccionario o 0 si no existe #}
-                            {% set count = conteo_categorias.get(cat, 0) if conteo_categorias is defined else 0 %}
-                            <li>
-                                                                <a href="#" class="block p-2 rounded-lg text-gray-700 hover:bg-gray-100 filter-btn" onclick="filtrarDisenos('categoria', '{{ cat }}')">
-                                    {{ cat }} ({{ count }})
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                        {% for cat in categorias_disponibles %}
+                            {# Uso de .get(cat, 0) para obtener el conteo del diccionario o 0 si no existe #}
+                            {% set count = conteo_categorias.get(cat, 0) if conteo_categorias is defined else 0 %}
+                            <li>
+                                <a href="#" class="block p-2 rounded-lg text-gray-700 hover:bg-gray-100">
+                                    {{ cat }} ({{ count }})
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
 
-                    <h3 class="text-xl font-bold mt-6 pt-4 border-t text-gray-800">Filtros por Dificultad</h3>
-                    <div class="mt-3 space-y-2">
-                        <label class="flex items-center text-gray-700">
-                                                        <input type="checkbox" id="filtro-facil" value="Fácil" onclick="filtrarDisenos('dificultad', this.value)" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary filter-checkbox">
-                            <span class="ml-2">Fácil</span>
-                        </label>
-                        <label class="flex items-center text-gray-700">
-                                                        <input type="checkbox" id="filtro-intermedio" value="Intermedio" onclick="filtrarDisenos('dificultad', this.value)" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary filter-checkbox">
-                            <span class="ml-2">Intermedio</span>
-                        </label>
-                        <label class="flex items-center text-gray-700">
-                                                        <input type="checkbox" id="filtro-avanzado" value="Avanzado" onclick="filtrarDisenos('dificultad', this.value)" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary filter-checkbox">
-                            <span class="ml-2">Avanzado</span>
-                        </label>
-                    </div>
-                </div>
-            </aside>
-            
-                        <section class="w-full md:w-3/4">
-                <h2 class="text-3xl font-semibold mb-6 text-gray-700">Diseños Disponibles</h2>
-                
-                <div id="design-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        {% for diseno in disenos %}
-                                        <div class="design-card bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl" 
-                         data-categoria="{{ diseno.categoria }}"
-                         data-dificultad="{{ diseno.dificultad }}">
-                                                <div class="w-full h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-                                                        <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x300/e5e7eb/4b5563?text=Sin+Imagen';" 
-                                    alt="Diseño de {{ diseno.nombre }}" 
-                                    class="w-full h-full object-cover">
-                        </div>
-                        
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-gray-800 mb-1">{{ diseno.nombre }}</h3>
-                            <p class="text-sm text-gray-500 mb-3">
-                                Categoría: <span class="font-medium">{{ diseno.categoria }}</span> | 
-                                Dificultad: <span class="font-medium">{{ diseno.dificultad }}</span>
-                            </p>
-                            
-                            <a href="{{ url_for('tienda') }}" class="block text-center w-full py-2 bg-paper-secondary text-white font-semibold rounded-lg hover:bg-green-700 transition duration-150">
-                                Comprar Diseño
-                            </a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                                    </div>
-
-                                <div class="text-center mt-10">
-                    <button id="load-more-btn" 
-                            onclick="cargarMasDisenos({{ tamano_lote|default(9) }})"
-                            class="px-8 py-3 bg-paper-primary text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-150 transform hover:scale-105 active:scale-95">
-                        Cargar Más Diseños
-                    </button>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer class="bg-gray-800 text-white py-6 mt-10">
-        <div class="container mx-auto text-center">
-            <p class="mb-1">&copy; 2025 Paper's World. Todos los derechos reservados.</p>
-            <p class="text-sm text-gray-400">
-                <a href="#" class="hover:text-white mx-2">Política de Privacidad</a>
-                <span class="mx-1">|</span>
-                <a href="#" class="hover:text-white mx-2">Términos y Condiciones</a>
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        // Array de todos los elementos de diseño
-        const designCards = Array.from(document.querySelectorAll('.design-card'));
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        // El índice comienza en 0, pero se actualizará a TAMANO_LOTE después de la inicialización
-        let currentIndex = 0; 
-      
-        // --- CAMBIO: Variables Globales para el Filtrado ---
-        let categoriaSeleccionada = 'Todos'; 
-        let dificultadesSeleccionadas = []; 
-        
-        function initializeDesigns(limit) {
-            // SOLO se usa para la carga inicial de "Todos los Diseños"
-            designCards.forEach((card, index) => {
-                if (index < limit) {
-                    card.classList.add('active');
-                } else {
-                    card.classList.remove('active');
-                }
-            });
-            currentIndex = limit; 
-            checkLoadMoreVisibility();
-        }
-        
-        function cargarMasDisenos(batchSize) {
-            // Lógica existente para la paginación de todo el catálogo.
-            loadMoreBtn.textContent = 'Cargando...';
-            loadMoreBtn.disabled = true;
-            
-            setTimeout(() => {
-                const targetIndex = currentIndex + batchSize;
-
-                for (let i = currentIndex; i < designCards.length && i < targetIndex; i++) {
-                    designCards[i].classList.add('active');
-                }
-                currentIndex = targetIndex;
-
-                loadMoreBtn.textContent = 'Cargar Más Diseños';
-                loadMoreBtn.disabled = false;
-                checkLoadMoreVisibility();
-            }, 300); 
-        }
-       
-        function checkLoadMoreVisibility() {
-            if (currentIndex >= designCards.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'inline-block';
-            }
-        }
-
-        // --- FUNCIÓN PRINCIPAL DE FILTRADO (CAMBIO) ---
-        function filtrarDisenos(tipo, valor) {
-            // 1. Actualizar el estado del filtro (Categoría o Dificultad)
-            if (tipo === 'categoria') {
-                categoriaSeleccionada = valor;
-                
-                // Si cambiamos la categoría, limpiamos todos los filtros de dificultad
-                dificultadesSeleccionadas = [];
-                document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
-                
-                actualizarClaseActiva(valor); 
-            } else if (tipo === 'dificultad') {
-                const checkbox = document.querySelector(`input[value="${valor}"]`);
-                if (checkbox.checked) {
-                    dificultadesSeleccionadas.push(valor);
-                } else {
-                    dificultadesSeleccionadas = dificultadesSeleccionadas.filter(d => d !== valor);
-                }
-            }
-
-            // 2. Determinar si estamos aplicando un filtro diferente a "Todos"
-            const isFiltering = categoriaSeleccionada !== 'Todos' || dificultadesSeleccionadas.length > 0;
+                    <h3 class="text-xl font-bold mt-6 pt-4 border-t text-gray-800">Filtros</h3>
+                    <div class="mt-3 space-y-2">
+                        <label class="flex items-center text-gray-700">
+                            <input type="checkbox" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary">
+                            <span class="ml-2">Fácil</span>
+                        </label>
+                        <label class="flex items-center text-gray-700">
+                            <input type="checkbox" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary">
+                            <span class="ml-2">Intermedio</span>
+                        </label>
+                        <label class="flex items-center text-gray-700">
+                            <input type="checkbox" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary">
+                            <span class="ml-2">Avanzado</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
             
-            // 3. Aplicar los filtros a TODAS las tarjetas
-            designCards.forEach(card => {
-                const categoriaTarjeta = card.getAttribute('data-categoria');
-                const dificultadTarjeta = card.getAttribute('data-dificultad');
+            <!-- Columna de Diseños -->
+            <section class="w-full md:w-3/4">
+                <h2 class="text-3xl font-semibold mb-6 text-gray-700">Diseños Disponibles</h2>
                 
-                // A. Verificar Categoría
-                const categoriaCoincide = categoriaSeleccionada === 'Todos' || categoriaTarjeta === categoriaSeleccionada;
-                
-                // B. Verificar Dificultad (si hay alguna seleccionada)
-                let dificultadCoincide = true;
-                if (dificultadesSeleccionadas.length > 0) {
-                    dificultadCoincide = dificultadesSeleccionadas.includes(dificultadTarjeta);
-                }
+                <div id="design-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Iteración de Jinja2: Renderiza todos los diseños, JavaScript controla la visibilidad -->
+                    {% for diseno in disenos %}
+                    <div class="design-card bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl">
+                        <!-- Contenedor de la Imagen con Placeholder de Fallback -->
+                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+                            <!-- Uso de 'static/imagenes/' si no existe lanza Placeholder -->
+                            <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
+                                    onerror="this.onerror=null; this.src='https://placehold.co/400x300/e5e7eb/4b5563?text=Sin+Imagen';" 
+                                    alt="Diseño de {{ diseno.nombre }}" 
+                                    class="w-full h-full object-cover">
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">{{ diseno.nombre }}</h3>
+                            <p class="text-sm text-gray-500 mb-3">
+                                Categoría: <span class="font-medium">{{ diseno.categoria }}</span> | 
+                                Dificultad: <span class="font-medium">{{ diseno.dificultad }}</span>
+                            </p>
+                            
+                            <a href="{{ url_for('tienda') }}" class="block text-center w-full py-2 bg-paper-secondary text-white font-semibold rounded-lg hover:bg-green-700 transition duration-150">
+                                Comprar Diseño
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- final de Iteración -->
+                </div>
 
-                // C. Mostrar si AMBOS filtros coinciden
-                if (categoriaCoincide && dificultadCoincide) {
-                    card.classList.add('active'); 
+                <!-- Boton de Cargar Mas Diseños -->
+                <div class="text-center mt-10">
+                    <button id="load-more-btn" 
+                            onclick="cargarMasDisenos({{ tamano_lote|default(9) }})"
+                            class="px-8 py-3 bg-paper-primary text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-150 transform hover:scale-105 active:scale-95">
+                        Cargar Más Diseños
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <p class="mb-1">&copy; 2025 Paper's World. Todos los derechos reservados.</p>
+            <p class="text-sm text-gray-400">
+                <a href="#" class="hover:text-white mx-2">Política de Privacidad</a>
+                <span class="mx-1">|</span>
+                <a href="#" class="hover:text-white mx-2">Términos y Condiciones</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Array de todos los elementos de diseño
+        const designCards = Array.from(document.querySelectorAll('.design-card'));
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        // El índice comienza en 0, pero se actualizará a TAMANO_LOTE después de la inicialización
+        let currentIndex = 0; 
+      
+        function initializeDesigns(limit) {
+            // Recorre todas las tarjetas de diseño
+            designCards.forEach((card, index) => {
+                // Si el índice es menor que el límite (9), lo marca como activo para mostrarlo
+                if (index < limit) {
+                    card.classList.add('active');
                 } else {
-                    card.classList.remove('active'); 
+                    card.classList.remove('active');
                 }
             });
+            currentIndex = limit; // Establece el índice de inicio para la próxima carga
+            checkLoadMoreVisibility();
+        }
+        function cargarMasDisenos(batchSize) {
+            // Animacion: Desactiva el boton y muestra un mensaje temporal
+            loadMoreBtn.textContent = 'Cargando...';
+            loadMoreBtn.disabled = true;
+            // delay para simular una carga y mejorar la UX para el usuario
+            setTimeout(() => {
+                const targetIndex = currentIndex + batchSize;
 
-            // 4. Gestionar el botón "Cargar Más Diseños"
-            if (isFiltering) {
-                 loadMoreBtn.style.display = 'none';
+                for (let i = currentIndex; i < designCards.length && i < targetIndex; i++) {
+                    // Muestra la tarjeta de diseño agregando la clase active
+                    designCards[i].classList.add('active');
+                }
+                currentIndex = targetIndex;
+                 // Actualiza el índice
+                // Vuelve a habilitar el botón y actualiza el texto
+                loadMoreBtn.textContent = 'Cargar Más Diseños';
+                loadMoreBtn.disabled = false;
+                checkLoadMoreVisibility();
+            }, 300); // 300ms de retraso para la carga
+        }
+       
+        function checkLoadMoreVisibility() {
+            if (currentIndex >= designCards.length) {
+                // Si ya no hay más diseños para cargar, oculta el botón
+                loadMoreBtn.style.display = 'none';
             } else {
-                 // Si se vuelve a 'Todos', restauramos la paginación y el botón
-                 initializeDesigns({{ tamano_lote|default(8) }});
+                loadMoreBtn.style.display = 'inline-block';
             }
         }
-        
-        // --- FUNCIÓN AUXILIAR PARA RESALTADO VISUAL (CAMBIO) ---
-        function actualizarClaseActiva(categoria) {
-            document.querySelectorAll('.filter-btn').forEach(a => {
-                // Elimina clases activas de todos
-                a.classList.remove('bg-paper-primary', 'text-white', 'font-semibold');
-                a.classList.add('text-gray-700', 'hover:bg-gray-100');
-                
-                // Agrega clases activas solo al seleccionado
-                if (a.textContent.includes(categoria)) {
-                    a.classList.add('bg-paper-primary', 'text-white', 'font-semibold');
-                    a.classList.remove('text-gray-700', 'hover:bg-gray-100');
-                }
-            });
-        }
-
-        // Llama a la inicialización cuando el documento esté listo
-        document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa el catálogo con paginación
-            const batchSize = {{ tamano_lote|default(8) }};
-            initializeDesigns(batchSize);
-            
-            // Inicializa el resaltado de "Todos los Diseños"
-            const allDesignsLink = document.querySelector('a[onclick*="filtrarDisenos(\'categoria\', \'Todos\')"]');
-            if (allDesignsLink) {
-                allDesignsLink.classList.remove('text-gray-700', 'hover:bg-gray-100');
-                allDesignsLink.classList.add('bg-paper-primary', 'text-white', 'font-semibold');
-            }
-        });
-    </script>
+        // Llama a la inicialización cuando el documento esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            // El valor de tamano_lote (9) viene del contexto de Flask
+            const batchSize = {{ tamano_lote|default(8) }};
+            initializeDesigns(batchSize);
+        });
+    </script>
 
 </body>
 </html>
