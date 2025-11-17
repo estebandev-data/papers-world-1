@@ -15,6 +15,13 @@
         .text-paper-secondary { color: #059669 !important; }
         .btn-paper-secondary { background-color: #059669; color: white; border: none; }
         .btn-paper-secondary:hover { background-color: #047a54; color: white; }
+
+        /* === CORRECCIÓN DE NAVBAR PARA MÓVILES (iOS/Android) === */
+        /* Esta corrección usa un alto Z-Index y punteros para asegurar que el menú no quede detrás de nada. */
+        .dropdown-menu {
+            z-index: 1050; 
+            pointer-events: auto; /* Permite interacción táctil */
+        }
     </style>
 </head>
 <body>
@@ -50,9 +57,9 @@
     <p class="text-center text-muted lead">Descarga instantáneamente diseños para comenzar tu proyecto hoy mismo.</p>
 
     <div class="d-flex justify-content-center mb-5">
-        <a href="#" class="btn btn-outline-secondary mx-2">promociones en cursos via discord</a>
-        <a href="#" class="btn btn-outline-secondary mx-2">agenda tu cita via discord</a>
-        <a href="#" class="btn btn-paper-secondary mx-2">Todos los Diseños</a>
+                <a href="https://discord.gg/Kj29BqFY" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary mx-2">promociones en cursos via discord</a> 
+                <a href="https://discord.gg/Kj29BqFY" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary mx-2">agenda tu cita via discord</a>
+                <a href="#" class="btn btn-paper-secondary mx-2">Todos los Diseños</a>
     </div>
 
     <section>
