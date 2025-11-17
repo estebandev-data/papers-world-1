@@ -85,24 +85,6 @@ def inicializar_db():
             print("Base de datos y datos de ejemplo iniciales.")
         """
 
-# ----------------------------------------------------
-# RUTA TEMPORAL PARA CREAR LA ESTRUCTURA EN RENDER
-# IMPORTANTE: VISITAR UNA VEZ, LUEGO BORRAR ESTA RUTA
-# ----------------------------------------------------
-@app.route('/create-db-structure-now')
-def create_db_structure():
-    try:
-        # Crea todas las tablas definidas en tus modelos (Diseno, Comentario, SolicitudPersonalizacion)
-        db.create_all()
-        # Esto resolverá el error 'relation "diseno" does not exist' y las secuencias
-        return "¡Estructura de la base de datos (tablas y secuencias) creada exitosamente en Render! Proceda con la importación de datos."
-    except Exception as e:
-        return f"Error al crear la estructura de la DB: {e}"
-# ----------------------------------------------------
-# FIN DE RUTA TEMPORAL
-# ----------------------------------------------------
-
-
 # @ app.route rutas 
 # Ruta de Inicio
 @app.route('/')
