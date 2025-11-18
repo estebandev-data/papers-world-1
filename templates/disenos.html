@@ -93,26 +93,22 @@
 </header>
 
     <main class="container mx-auto my-10 px-4">
-        <h1 class="text-center mb-10 text-4xl font-extrabold text-paper-primary">Explora Nuestra Colección de Diseños</h1>
+    <h1 class="text-center mb-10 text-4xl font-extrabold text-paper-primary">Explora Nuestra Colección de Diseños</h1>
 
-        <div class="flex flex-col md:flex-row gap-8">
-            <!-- Clasificación y Filtros -->
-            <aside class="w-full md:w-1/4 sidebar-fixed">
+    <div class="bg-white md:bg-transparent"> 
+        <div class="flex flex-col md:flex-row gap-8 md:px-0">
+            
+            <aside class="w-full md:w-1/4 md:sticky md:top-20 md:self-start z-10"> 
                 <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-paper-primary">
                     <h2 class="text-2xl font-bold mb-4 text-gray-800">Clasificación</h2>
                     <ul class="space-y-1">
-                        <!-- Todos los Diseños -->
                         <li>
                             <a href="#" class="block p-2 rounded-lg bg-paper-primary text-white font-semibold">
                                 Todos los Diseños ({{ disenos|length }})
                             </a>
                         </li>
-                        
-                        <!-- Categorías Dinámicas usando conteo_categorias de Flask -->
                         {% set categorias_disponibles = ['Arquitectura', 'Animales', 'Fantasia y Personajes', 'Vehiculos', 'Mecanicos y Robots', 'Otros'] %}
-
                         {% for cat in categorias_disponibles %}
-                            {# Uso de .get(cat, 0) para obtener el conteo del diccionario o 0 si no existe #}
                             {% set count = conteo_categorias.get(cat, 0) if conteo_categorias is defined else 0 %}
                             <li>
                                 <a href="#" class="block p-2 rounded-lg text-gray-700 hover:bg-gray-100">
@@ -124,33 +120,18 @@
 
                     <h3 class="text-xl font-bold mt-6 pt-4 border-t text-gray-800">Filtros</h3>
                     <div class="mt-3 space-y-2">
-                        <label class="flex items-center text-gray-700">
-                            <input type="checkbox" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary">
-                            <span class="ml-2">Fácil</span>
-                        </label>
-                        <label class="flex items-center text-gray-700">
-                            <input type="checkbox" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary">
-                            <span class="ml-2">Intermedio</span>
-                        </label>
-                        <label class="flex items-center text-gray-700">
-                            <input type="checkbox" class="form-checkbox text-paper-secondary rounded border-gray-300 focus:ring-paper-secondary">
-                            <span class="ml-2">Avanzado</span>
-                        </label>
-                    </div>
+                        </div>
                 </div>
             </aside>
             
-            <!-- Columna de Diseños -->
             <section class="w-full md:w-3/4">
                 <h2 class="text-3xl font-semibold mb-6 text-gray-700">Diseños Disponibles</h2>
                 
                 <div id="design-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Iteración de Jinja2: Renderiza todos los diseños, JavaScript controla la visibilidad -->
                     {% for diseno in disenos %}
-                    <div class="design-card bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl">
-                        <!-- Contenedor de la Imagen con Placeholder de Fallback -->
+                    <div class="design-card bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl" 
+                         data-categoria="{{ diseno.categoria | lower }}" data-dificultad="{{ diseno.dificultad | lower }}"> 
                         <div class="w-full h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-                            <!-- Uso de 'static/imagenes/' si no existe lanza Placeholder -->
                             <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
                                     onerror="this.onerror=null; this.src='https://placehold.co/400x300/e5e7eb/4b5563?text=Sin+Imagen';" 
                                     alt="Diseño de {{ diseno.nombre }}" 
@@ -170,10 +151,8 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <!-- final de Iteración -->
                 </div>
 
-                <!-- Boton de Cargar Mas Diseños -->
                 <div class="text-center mt-10">
                     <button id="load-more-btn" 
                             onclick="cargarMasDisenos({{ tamano_lote|default(9) }})"
@@ -183,7 +162,8 @@
                 </div>
             </section>
         </div>
-    </main>
+    </div>
+</main>
 
     <footer class="bg-gray-800 text-white py-6 mt-10">
         <div class="container mx-auto text-center">
