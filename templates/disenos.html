@@ -56,22 +56,23 @@
     <!-- Header y Navbar -->
     <header>
     <nav class="bg-white shadow-md sticky top-0 z-20"> 
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a class="text-paper-primary text-2xl font-bold" href="{{ url_for('index') }}">Paper's World</a>
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center relative">
             
-            <div class="flex items-center space-x-2">
-                <div class="hidden md:flex space-x-6 items-center">
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('index') }}">Inicio</a>
-                    <a class="text-paper-primary font-bold border-b-2 border-paper-primary" href="{{ url_for('disenos') }}">Diseños</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('personalizacion') }}">Personalización</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('aprende') }}">Aprende</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('clases') }}">Clases</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('feedback') }}">Comentarios</a>
-                    <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('tienda') }}">Tienda</a>
-                </div>
-
+            <a class="text-paper-primary text-2xl font-bold z-30" href="{{ url_for('index') }}">Paper's World</a>
+            
+            <div class="hidden md:flex space-x-6 items-center md:absolute md:inset-x-0 md:justify-center z-10">
+                <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('index') }}">Inicio</a>
+                <a class="text-paper-primary font-bold border-b-2 border-paper-primary" href="{{ url_for('disenos') }}">Diseños</a>
+                <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('personalizacion') }}">Personalización</a>
+                <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('aprende') }}">Aprende</a>
+                <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('clases') }}">Clases</a>
+                <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('feedback') }}">Comentarios</a>
+                <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('tienda') }}">Tienda</a>
+            </div>
+            
+            <div class="flex items-center space-x-2 z-30"> 
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
-
+                
                 <button id="menu-button" class="md:hidden p-2 text-gray-600 hover:text-paper-primary focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
