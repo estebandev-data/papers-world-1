@@ -55,9 +55,11 @@
 
     <!-- Header y Navbar -->
     <header>
-        <nav class="bg-white shadow-md sticky top-0 z-10">
-            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-                <a class="text-paper-primary text-2xl font-bold" href="{{ url_for('index') }}">Paper's World</a>
+    <nav class="bg-white shadow-md sticky top-0 z-20"> 
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a class="text-paper-primary text-2xl font-bold" href="{{ url_for('index') }}">Paper's World</a>
+            
+            <div class="flex items-center space-x-2">
                 <div class="hidden md:flex space-x-6 items-center">
                     <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('index') }}">Inicio</a>
                     <a class="text-paper-primary font-bold border-b-2 border-paper-primary" href="{{ url_for('disenos') }}">Diseños</a>
@@ -67,11 +69,28 @@
                     <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('feedback') }}">Comentarios</a>
                     <a class="text-gray-600 hover:text-paper-primary" href="{{ url_for('tienda') }}">Tienda</a>
                 </div>
-                <div class="flex space-x-2">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
+
+                <button id="menu-button" class="md:hidden p-2 text-gray-600 hover:text-paper-primary focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
-        </nav>
-    </header>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t">
+            <div class="px-4 pt-2 pb-3 space-y-1 sm:px-3">
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('index') }}">Inicio</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-paper-primary bg-gray-50" href="{{ url_for('disenos') }}">Diseños</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('personalizacion') }}">Personalización</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('aprende') }}">Aprende</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('clases') }}">Clases</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('feedback') }}">Comentarios</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('tienda') }}">Tienda</a>
+            </div>
+        </div>
+    </nav>
+</header>
 
     <main class="container mx-auto my-10 px-4">
         <h1 class="text-center mb-10 text-4xl font-extrabold text-paper-primary">Explora Nuestra Colección de Diseños</h1>
@@ -233,6 +252,17 @@
             initializeDesigns(batchSize);
         });
     </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
 </body>
 </html>
