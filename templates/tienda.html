@@ -67,7 +67,7 @@
                     <li class="nav-item"><a class="nav-link [active-class-if-tienda]" href="{{ url_for('tienda') }}">Tienda</a></li>
                 </ul>
                 <div class="d-flex">
-                    <!-- boton carrito -->
+        
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
                         <span id="cart-count" class="d-none">0</span>
                 </div>
@@ -109,9 +109,10 @@
                         
                        <!-- Enlace directo a WhatsApp con mensaje personalizado -->
                         {% set mensaje = "Hola! Me interesa comprar el diseño " ~ diseno.nombre ~ " por $" ~ "%.2f"|format(diseno.precio) ~ " USD. ¿Cómo puedo realizar el pago?" %}
-                        <a href="https://wa.me/573026775927?text={{ mensaje | urlencode }}" 
-                           target="_blank" 
-                           class="btn btn-paper-primary w-100">
+                       <a href="https://wa.me/573144794045?text={{ mensaje | urlencode }}" 
+                            target="_blank" 
+                            class="btn w-100" 
+                            style="background-color: #1d4ed8; color: white; border: none;">
                             Pagar
                         </a>
                     </div>
