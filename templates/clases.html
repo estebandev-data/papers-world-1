@@ -105,14 +105,18 @@
                     </ul>
                     <a href="https://discord.gg/vxdbYxh2" target="_blank" class="btn btn-paper-primary btn-lg">Inscribirse a Taller Presencial</a>                                
                 </div>
-                <div class="col-md-5 text-center">
-                    <div class="bg-secondary bg-opacity-10 rounded-lg d-flex justify-content-center align-items-center" style="height: 250px;">
-                    <img src="{{ url_for('static', filename='imagenes/taller_presencial.jpg') }}" 
-     onerror="this.onerror=null; this.src='https://placehold.co/400x250/d1d5db/4b5563?text=Foto+Taller';" 
-     alt="Imagen del Taller Presencial" 
-     class="img-fluid rounded shadow-sm">
-                    </div>
-                </div>
+               <div class="col-md-5 text-center">
+                   <div class="bg-secondary bg-opacity-10 rounded-lg d-flex justify-content-center align-items-center overflow-hidden" style="height: 250px;">
+        
+                         <img src="{{ url_for('static', filename='imagenes/taller_presencial.jpg') }}" 
+                              onerror="this.onerror=null; this.src='https://placehold.co/400x250/d1d5db/4b5563?text=Foto+Taller';" 
+                              alt="Imagen del Taller Presencial" 
+             
+                              class="rounded shadow-sm w-100 h-100" 
+                              style="object-fit: cover;">
+             
+    </div>
+</div>
             </div>
         </section>
 
