@@ -32,8 +32,8 @@
             display: none;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            cursor: pointer; /* Indica que la tarjeta es clickable */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s, transform 0.3s;
+            cursor: pointer; 
         }
         .design-card.active {
             display: block;
@@ -90,7 +90,7 @@
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
                     </li>
@@ -98,9 +98,21 @@
                         <a class="nav-link active fw-bold text-paper-primary border-bottom border-2 border-paper-primary" aria-current="page" href="{{ url_for('disenos') }}">Diseños</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('feedback') }}">Comentarios</a>
+                        <a class="nav-link" href="{{ url_for('personalizacion') }}">Personalización</a>
                     </li>
-                    </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('aprende') }}">Aprende</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('clases') }}">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('comentarios') }}">Comentarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('tienda') }}">Tienda</a>
+                    </li>
+                </ul>
                 
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqqqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary">Encuesta</a>
             </div>
@@ -109,18 +121,40 @@
     </header>
 
     <main class="container my-5 px-4">
+        
         <div class="text-center text-md-start mb-5">
             <h1 class="fs-1 fw-bolder text-dark mb-2">Explora Nuestra Colección de Diseños</h1>
             <p class="lead text-muted">Diseños listos para armar. Haz clic para ver los detalles y las plantillas disponibles.</p>
         </div>
 
-        <div class="d-flex justify-content-start mb-4">
-            <h5 class="fw-bold me-3">Filtros/Clasificación:</h5>
+        <div class="row mb-5">
+            <div class="col-12">
+                <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="ratio ratio-16x9" style="min-height: 250px;">
+                                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1&controls=1" 
+                                        title="Video Promocional Paper's World" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2">
+                                <h5 class="fw-bold">¡Mira cómo se construyen nuestros diseños!</h5>
+                                <p>Plantillas fáciles de entender para todos los niveles.</p>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-start flex-wrap align-items-center mb-4">
+            <h5 class="fw-bold me-3 mb-2 mb-sm-0">Clasificación:</h5>
             <div class="btn-group" role="group" aria-label="Filtros de Diseño">
                 <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ disenos|length }})</button>
                 <button type="button" class="btn btn-outline-primary btn-sm">Arquitectura</button>
                 <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
-                </div>
+                <button type="button" class="btn btn-outline-primary btn-sm">Otros</button>
+            </div>
         </div>
         
         <div id="design-grid" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
@@ -232,7 +266,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
-        // Lógica de Carga de Diseños (Se mantiene igual)
+        // Lógica de Carga de Diseños (Cargar más)
         const designCards = Array.from(document.querySelectorAll('.design-card'));
         const loadMoreBtn = document.getElementById('load-more-btn');
         let currentIndex = 0; 
@@ -275,13 +309,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa los diseños y el carrusel
             const batchSize = {{ tamano_lote|default(8) }};
             initializeDesigns(batchSize);
-
-            // 🚨 LÓGICA PARA LLENAR EL MODAL
+            
+            // LÓGICA PARA LLENAR EL MODAL
             const designModal = document.getElementById('designModal');
             designModal.addEventListener('show.bs.modal', event => {
-                // Botón que activó el modal
                 const button = event.relatedTarget; 
 
                 // Extraer información de los atributos data-
@@ -299,11 +333,12 @@
                 // Opcional: Cambiar color de la dificultad
                 const diffSpan = document.getElementById('modal-dificultad');
                 diffSpan.className = 'fw-bold'; // Resetear
-                if (dificultad.toLowerCase().includes('fácil')) {
+                const diffLower = dificultad.toLowerCase();
+                if (diffLower.includes('fácil')) {
                     diffSpan.classList.add('text-success');
-                } else if (dificultad.toLowerCase().includes('media')) {
+                } else if (diffLower.includes('media')) {
                     diffSpan.classList.add('text-warning');
-                } else if (dificultad.toLowerCase().includes('difícil') || dificultad.toLowerCase().includes('experto')) {
+                } else if (diffLower.includes('difícil') || diffLower.includes('experto')) {
                     diffSpan.classList.add('text-danger');
                 } else {
                     diffSpan.classList.add('text-muted');
