@@ -21,13 +21,11 @@
             background-color: #f7f9fb;
         }
         
-        /* Clases de utilidad de Bootstrap redefinidas con tus colores */
+        /* Clases de utilidad */
         .bg-paper-primary { background-color: var(--paper-primary) !important; }
         .text-paper-primary { color: var(--paper-primary) !important; }
         .bg-paper-secondary { background-color: var(--paper-secondary) !important; }
-        .text-paper-secondary { color: var(--paper-secondary) !important; }
         
-        /* Lógica para mostrar/ocultar tarjetas con animación (CSS) */
         .design-card {
             display: none;
             opacity: 0;
@@ -68,13 +66,6 @@
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
             color: white;
         }
-        @media (min-width: 768px) {
-            .whatsapp-float {
-                width: 4rem; 
-                height: 4rem; 
-                font-size: 2rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -107,7 +98,7 @@
                         <a class="nav-link" href="{{ url_for('clases') }}">Clases</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('comentarios') }}">Comentarios</a>
+                        <a class="nav-link" href="{{ url_for('feedback') }}">Comentarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('tienda') }}">Tienda</a>
@@ -132,25 +123,27 @@
                 <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="ratio ratio-16x9" style="min-height: 250px;">
+                            <div class="ratio ratio-16x9" style="min-height: 250px; background-color: #e2e8f0;">
                                 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1&controls=1" 
                                         title="Video Promocional Paper's World" 
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen></iframe>
+                                        allowfullscreen 
+                                        style="border: 0;"></iframe>
                             </div>
                             <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2">
                                 <h5 class="fw-bold">¡Mira cómo se construyen nuestros diseños!</h5>
                                 <p>Plantillas fáciles de entender para todos los niveles.</p>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="d-flex justify-content-start flex-wrap align-items-center mb-4">
             <h5 class="fw-bold me-3 mb-2 mb-sm-0">Clasificación:</h5>
             <div class="btn-group" role="group" aria-label="Filtros de Diseño">
-                <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ disenos|length }})</button>
+                <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ (disenos|default([])|length) }})</button>
                 <button type="button" class="btn btn-outline-primary btn-sm">Arquitectura</button>
                 <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
                 <button type="button" class="btn btn-outline-primary btn-sm">Otros</button>
@@ -158,30 +151,30 @@
         </div>
         
         <div id="design-grid" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-            {% for diseno in disenos %}
+            {% for diseno in disenos|default([]) %}
             <div class="col">
                 <div class="design-card card rounded-3 shadow-sm overflow-hidden h-100" 
                     data-bs-toggle="modal" 
                     data-bs-target="#designModal"
-                    data-nombre="{{ diseno.nombre }}"
-                    data-categoria="{{ diseno.categoria }}"
-                    data-dificultad="{{ diseno.dificultad }}"
-                    data-imagen="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}"> 
+                    data-nombre="{{ diseno.nombre|default('Nombre Desconocido') }}"
+                    data-categoria="{{ diseno.categoria|default('N/A') }}"
+                    data-dificultad="{{ diseno.dificultad|default('Media') }}"
+                    data-imagen="{{ url_for('static', filename='imagenes/' + diseno.imagen_url)|default('') }}"> 
                     
                     <div class="w-100" style="height: 10rem; background-color: #f3f4f6;">
-                        <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
+                        <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url)|default('') }}" 
                                 onerror="this.onerror=null; this.src='https://placehold.co/400x300/e5e7eb/4b5563?text=Sin+Imagen';" 
-                                alt="Diseño de {{ diseno.nombre }}" 
+                                alt="Diseño de {{ diseno.nombre|default('Diseño') }}" 
                                 class="w-100 h-100 object-fit-cover">
                     </div>
                     
                     <div class="card-body p-3">
-                        <h3 class="fs-6 fw-bold text-dark mb-1">{{ diseno.nombre }}</h3>
+                        <h3 class="fs-6 fw-bold text-dark mb-1">{{ diseno.nombre|default('Diseño Sin Nombre') }}</h3>
                         <p class="small text-muted mb-1">
-                            Categoría: {{ diseno.categoria }}
+                            Categoría: {{ diseno.categoria|default('N/A') }}
                         </p>
                         <p class="small text-muted mb-0">
-                            Dificultad: <span class="fw-medium text-danger">{{ diseno.dificultad }}</span>
+                            Dificultad: <span class="fw-medium text-danger">{{ diseno.dificultad|default('N/A') }}</span>
                         </p>
                     </div>
                 </div>
@@ -191,7 +184,7 @@
 
         <div class="text-center mt-5">
             <button id="load-more-btn" 
-                    onclick="cargarMasDisenos({{ tamano_lote|default(9) }})"
+                    onclick="cargarMasDisenos({{ tamano_lote|default(8) }})"
                     class="btn bg-paper-secondary text-white fw-semibold rounded-pill px-5 py-2 shadow-lg transition duration-150 transform hover:scale-105" 
                     style="--bs-btn-hover-bg: #047857;">
                 Cargar Más Diseños
@@ -250,7 +243,7 @@
                             </ul>
                             
                             <p class="text-muted">
-                                *Nota: Aquí podrías añadir una descripción detallada del diseño, dimensiones o cualquier otra información relevante que tengas en tu base de datos.
+                                *Nota: Aquí podrías añadir una descripción detallada del diseño.
                             </p>
                             
                             <a id="modal-comprar" href="{{ url_for('tienda') }}" class="btn bg-paper-secondary text-white fw-bold w-100 py-2 mt-3" style="--bs-btn-hover-bg: #047857;">
@@ -309,7 +302,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa los diseños y el carrusel
             const batchSize = {{ tamano_lote|default(8) }};
             initializeDesigns(batchSize);
             
@@ -318,11 +310,11 @@
             designModal.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget; 
 
-                // Extraer información de los atributos data-
-                const nombre = button.getAttribute('data-nombre');
-                const categoria = button.getAttribute('data-categoria');
-                const dificultad = button.getAttribute('data-dificultad');
-                const imagen = button.getAttribute('data-imagen');
+                // Extracción segura de atributos (utiliza un string vacío si el atributo no existe)
+                const nombre = button.getAttribute('data-nombre') || 'Diseño';
+                const categoria = button.getAttribute('data-categoria') || 'N/A';
+                const dificultad = button.getAttribute('data-dificultad') || 'N/A';
+                const imagen = button.getAttribute('data-imagen') || 'https://placehold.co/400x300/e5e7eb/4b5563?text=Sin+Imagen';
 
                 // Actualizar el contenido del modal
                 document.getElementById('modal-nombre').textContent = nombre;
@@ -330,9 +322,9 @@
                 document.getElementById('modal-dificultad').textContent = dificultad;
                 document.getElementById('modal-imagen').src = imagen;
 
-                // Opcional: Cambiar color de la dificultad
+                // Cambiar color de la dificultad
                 const diffSpan = document.getElementById('modal-dificultad');
-                diffSpan.className = 'fw-bold'; // Resetear
+                diffSpan.className = 'fw-bold'; 
                 const diffLower = dificultad.toLowerCase();
                 if (diffLower.includes('fácil')) {
                     diffSpan.classList.add('text-success');
