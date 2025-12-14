@@ -345,9 +345,8 @@
 
     <script>
         // --- VARIABLES GLOBALES Y CONSTANTES ---
-        // Ahora seleccionamos el contenedor de la columna para controlar la visibilidad y reordenamiento
         const designColContainers = Array.from(document.querySelectorAll('.design-col-container'));
-        const designCards = designColContainers.map(col => col.querySelector('.design-card')); // Obtenemos las tarjetas para los datos
+        const designCards = designColContainers.map(col => col.querySelector('.design-card')); 
         const loadMoreBtn = document.getElementById('load-more-btn');
         const allFilterButtons = document.querySelectorAll('.filter-btn');
         const totalDesigns = designCards.length; 
@@ -359,7 +358,6 @@
 
         // --- LÓGICA DE CARGA Y PAGINACIÓN ---
         function initializeDesigns(limit) {
-            // Mostrar solo las primeras 'limit' tarjetas, el resto ocultas.
             designColContainers.forEach((col, index) => {
                 col.classList.remove('active');
                 if (index < limit) {
@@ -372,7 +370,6 @@
 
         function cargarMasDisenos(batchSize) {
             if (currentCategoryFilter !== 'Todos' || currentDifficultyFilter !== null) {
-                // Si hay filtros activos, no debe hacer nada la paginación.
                 return; 
             }
             
@@ -393,7 +390,6 @@
         }
         
         function checkLoadMoreVisibility() {
-            // Visible solo si estamos en vista 'Todos' sin filtro de dificultad y si quedan diseños por cargar
             const isDefaultView = currentCategoryFilter === 'Todos' && currentDifficultyFilter === null;
             
             if (isDefaultView && currentIndex < designColContainers.length) {
@@ -403,7 +399,6 @@
             }
         }
         
-        // Conteo Dinámico del Botón 'Todos'
         function updateAllButtonCount() {
             const allButton = document.getElementById('btn-all-designs');
             if (allButton) {
@@ -416,24 +411,19 @@
             
             // 1. Determinar y establecer el filtro actual
             if (filterType === 'categoria') {
-                // Si haces clic en la categoría activa, la desactivas (vuelve a 'Todos')
                 currentCategoryFilter = (currentCategoryFilter === filterValue && filterValue !== 'Todos') ? 'Todos' : filterValue;
                 
-                // Si activamos un filtro de categoría (que no es 'Todos'), desactivamos el de dificultad
                 if (currentCategoryFilter !== 'Todos') {
                     currentDifficultyFilter = null;
                 }
-                // Si el filtro clicado es 'Todos', reiniciamos ambos
                 if (filterValue === 'Todos') {
                     currentCategoryFilter = 'Todos';
                     currentDifficultyFilter = null;
                 }
 
             } else if (filterType === 'dificultad') {
-                // Si haces clic en la dificultad activa, la desactivas (vuelve a 'null')
                 currentDifficultyFilter = (currentDifficultyFilter === filterValue) ? null : filterValue;
                 
-                // Si activamos un filtro de dificultad, el filtro de categoría se fuerza a 'Todos'
                 if (currentDifficultyFilter !== null) {
                     currentCategoryFilter = 'Todos'; 
                 }
@@ -441,12 +431,12 @@
             
             // 2. Manejo visual de los botones activos
             allFilterButtons.forEach(btn => {
-                btn.classList.remove('active');
-                
+                btn.classList.remove('active'); // Se remueve la clase de todos
+
                 const btnType = btn.getAttribute('data-filter-type');
                 const btnValue = btn.getAttribute('data-filter-value');
                 
-                // Criterios de activación
+                // Criterios de activación estándar
                 const isAllActive = currentCategoryFilter === 'Todos' && currentDifficultyFilter === null && btnValue === 'Todos';
                 const isCategoryActive = btnType === 'categoria' && btnValue === currentCategoryFilter;
                 const isDifficultyActive = btnType === 'dificultad' && btnValue === currentDifficultyFilter;
@@ -454,38 +444,35 @@
                 if (isAllActive || isCategoryActive || isDifficultyActive) {
                     btn.classList.add('active');
                 }
+                
+                // CAMBIO SOLICITADO: Forzar a que el botón 'Todos' siempre tenga la clase 'active' para que se vea cómodo/seleccionado
+                if (btnValue === 'Todos') {
+                     btn.classList.add('active');
+                }
             });
             
             // 3. Aplicar el filtro a las tarjetas y permitir que se reordenen
             let filteredCount = 0;
             designCards.forEach((card, index) => {
-                // Usamos la tarjeta para leer los datos, pero aplicamos la clase al contenedor (col)
                 const cardCategory = card.getAttribute('data-categoria');
                 const cardDifficulty = card.getAttribute('data-dificultad');
-                const colContainer = designColContainers[index]; // El elemento .col
+                const colContainer = designColContainers[index]; 
                 
-                // Criterio de Coincidencia (debe pasar la Categoría Y la Dificultad)
                 let matchesCategory = (currentCategoryFilter === 'Todos' || cardCategory === currentCategoryFilter);
-                // NOTA: Para que funcione, el valor en la tarjeta (ej: "Avanzado") debe coincidir exactamente con el valor del botón (ej: "Avanzado")
                 let matchesDifficulty = (currentDifficultyFilter === null || cardDifficulty === currentDifficultyFilter);
 
                 if (matchesCategory && matchesDifficulty) {
-                    colContainer.classList.add('active'); // Muestra la columna, permitiendo el reordenamiento
+                    colContainer.classList.add('active'); 
                     filteredCount++;
                 } else {
-                    colContainer.classList.remove('active'); // Oculta la columna, eliminando el espacio
+                    colContainer.classList.remove('active'); 
                 }
             });
             
             // 4. Actualizar estado de paginación y visibilidad del botón "Cargar Más"
             if (currentCategoryFilter === 'Todos' && currentDifficultyFilter === null) {
-                 // Si vuelve a la vista "Todos", reinicializar la paginación
                  initializeDesigns(currentIndex); 
-            } else {
-                 // Si hay filtros, la paginación se deshabilita
-                 currentIndex = filteredCount; // Este valor no se usa para paginación si hay filtros, pero lo reiniciamos.
             }
-            // En cualquier caso de filtro activo, ocultamos el botón de cargar más
             checkLoadMoreVisibility(); 
         }
 
@@ -526,8 +513,6 @@
                 const diffSpan = document.getElementById('modal-dificultad');
                 diffSpan.className = 'fw-bold'; 
                 const diffLower = dificultad.toLowerCase();
-                // Nota: Usamos includes para manejar la tilde en "Fácil" si la tuviéramos en el dato, 
-                // pero ya no es necesario dado que el botón usa el valor literal del data-dificultad.
                 if (diffLower.includes('fácil')) {
                     diffSpan.classList.add('text-success');
                 } else if (diffLower.includes('intermedio') || diffLower.includes('media')) {
