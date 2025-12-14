@@ -26,9 +26,9 @@
         .text-paper-primary { color: var(--paper-primary) !important; }
         .bg-paper-secondary { background-color: var(--paper-secondary) !important; }
         
-        /* Ajuste de fuente en el NAV para que sea más pequeña */
+        /* Ajuste de fuente en el NAV */
         .navbar-nav .nav-link {
-            font-size: 0.95rem; /* Letra ligeramente más pequeña */
+            font-size: 0.95rem; 
             padding-left: 0.8rem !important;
             padding-right: 0.8rem !important;
         }
@@ -125,11 +125,10 @@
         </div>
 
         <div class="row mb-5 justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
-                <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
+            <div class="col-12 col-xl-10"> <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="ratio ratio-16x9" style="min-height: 250px; background-color: #e2e8f0;">
+                            <div class="ratio ratio-16x9" style="min-height: 350px; background-color: #e2e8f0;">
                                 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&controls=1&loop=1&playlist=dQw4w9WgXcQ" 
                                         title="Video Promocional Paper's World" 
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -145,22 +144,24 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-12 col-md-6 mb-3">
-                <h5 class="fw-bold mb-3">Filtrar por Clasificación:</h5>
-                <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Diseño">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-12 col-lg-10">
+                
+                <h5 class="fw-bold mb-3 text-center text-md-start">Filtrar por Clasificación:</h5>
+                <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start mb-4" role="group" aria-label="Filtros de Clasificación">
                     <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ (disenos|default([])|length) }})</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">Arquitectura</button>
                     <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Vehículos</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Fantasía</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Personajes</button>
                     <button type="button" class="btn btn-outline-primary btn-sm">Otros</button>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 mb-3">
-                 <h5 class="fw-bold mb-3">Filtrar por Dificultad:</h5>
-                 <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Dificultad">
+                
+                <h5 class="fw-bold mb-3 mt-3 text-center text-md-start">Filtrar por Dificultad:</h5>
+                 <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start" role="group" aria-label="Filtros de Dificultad">
                     <button type="button" class="btn btn-outline-success btn-sm">Fácil</button>
-                    <button type="button" class="btn btn-outline-warning btn-sm">Media</button>
-                    <button type="button" class="btn btn-outline-danger btn-sm">Difícil</button>
+                    <button type="button" class="btn btn-outline-warning btn-sm">Intermedio</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm">Avanzado</button>
                 </div>
             </div>
         </div>
@@ -343,9 +344,9 @@
                 const diffLower = dificultad.toLowerCase();
                 if (diffLower.includes('fácil')) {
                     diffSpan.classList.add('text-success');
-                } else if (diffLower.includes('media')) {
+                } else if (diffLower.includes('intermedio') || diffLower.includes('media')) {
                     diffSpan.classList.add('text-warning');
-                } else if (diffLower.includes('difícil') || diffLower.includes('experto')) {
+                } else if (diffLower.includes('avanzado') || diffLower.includes('difícil') || diffLower.includes('experto')) {
                     diffSpan.classList.add('text-danger');
                 } else {
                     diffSpan.classList.add('text-muted');
