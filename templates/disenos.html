@@ -26,14 +26,11 @@
         .text-paper-primary { color: var(--paper-primary) !important; }
         .bg-paper-secondary { background-color: var(--paper-secondary) !important; }
         
-        /* Estilos para el carrusel de video vertical */
-        .vertical-video-container {
-            width: 100%; /* Ocupa el col-md-4 */
-            max-width: 350px; /* Máximo ancho en desktop */
-            margin: 0 auto;
-        }
-        .ratio-vertical {
-            --bs-aspect-ratio: 150%; /* Relación de aspecto 3:2 (Alto:Ancho) */
+        /* Ajuste de fuente en el NAV para que sea más pequeña */
+        .navbar-nav .nav-link {
+            font-size: 0.95rem; /* Letra ligeramente más pequeña */
+            padding-left: 0.8rem !important;
+            padding-right: 0.8rem !important;
         }
 
         /* Lógica para mostrar/ocultar tarjetas con animación (CSS) */
@@ -82,42 +79,42 @@
 <body>
 
     <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top" style="z-index: 20;">
-        <div class="container-fluid container-lg px-4">
-            <a class="navbar-brand text-paper-primary fw-bold fs-4" href="{{ url_for('index') }}">Paper's World</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active text-paper-primary fw-bold border-bottom border-2 border-paper-primary" aria-current="page" href="{{ url_for('disenos') }}">Diseños</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('personalizacion') }}">Personalización</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('aprende') }}">Aprende</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('clases') }}">Clases</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('feedback') }}">Comentarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('tienda') }}">Tienda</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqqqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary">Encuesta</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top" style="z-index: 20;">
+            <div class="container-fluid container-lg px-4">
+                <a class="navbar-brand text-paper-primary fw-bold fs-4" href="{{ url_for('index') }}">Paper's World</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-paper-primary fw-bold" aria-current="page" href="{{ url_for('disenos') }}">Diseños</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('personalizacion') }}">Personalización</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('aprende') }}">Aprende</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('clases') }}">Clases</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('feedback') }}">Comentarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('tienda') }}">Tienda</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqqqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary">Encuesta</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
     </header>
 
     <main class="container my-5 px-4">
@@ -127,49 +124,47 @@
             <p class="lead text-muted">Diseños listos para armar. Haz clic para ver los detalles y las plantillas disponibles.</p>
         </div>
 
-        <div class="row mb-5 align-items-center">
-            
-            <div class="col-12 col-md-4 mb-4 mb-md-0 d-flex justify-content-center">
-                <div class="vertical-video-container">
-                    <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="ratio ratio-vertical" style="min-height: 400px; background-color: #e2e8f0;">
-                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1&controls=1" 
-                                            title="Video Promocional Paper's World" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowfullscreen 
-                                            style="border: 0;"></iframe>
-                                </div>
-                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2">
-                                    <p class="small fw-bold">¡Guía de montaje!</p>
-                                </div>
+        <div class="row mb-5 justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="ratio ratio-16x9" style="min-height: 250px; background-color: #e2e8f0;">
+                                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&controls=1&loop=1&playlist=dQw4w9WgXcQ" 
+                                        title="Video Promocional Paper's World" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen 
+                                        style="border: 0;"></iframe>
+                            </div>
+                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2">
+                                <h5 class="fw-bold">¡Mira cómo se construyen nuestros diseños!</h5>
+                                <p>Plantillas fáciles de entender para todos los niveles.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 col-md-8">
+        </div>
+        <div class="row mb-4">
+            <div class="col-12 col-md-6 mb-3">
                 <h5 class="fw-bold mb-3">Filtrar por Clasificación:</h5>
                 <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Diseño">
-                    <button type="button" class="btn btn-paper-primary text-white">Todos ({{ (disenos|default([])|length) }})</button>
-                    <button type="button" class="btn btn-outline-primary">Arquitectura</button>
-                    <button type="button" class="btn btn-outline-primary">Animales</button>
-                    <button type="button" class="btn btn-outline-primary">Fantasia</button>
-                    <button type="button" class="btn btn-outline-primary">Vehículos</button>
-                    <button type="button" class="btn btn-outline-primary">Otros</button>
+                    <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ (disenos|default([])|length) }})</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Arquitectura</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Otros</button>
                 </div>
-
-                <h5 class="fw-bold mt-4 mb-3">Filtrar por Dificultad:</h5>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+                 <h5 class="fw-bold mb-3">Filtrar por Dificultad:</h5>
                  <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Dificultad">
-                    <button type="button" class="btn btn-outline-success">Fácil</button>
-                    <button type="button" class="btn btn-outline-warning">Media</button>
-                    <button type="button" class="btn btn-outline-danger">Difícil</button>
+                    <button type="button" class="btn btn-outline-success btn-sm">Fácil</button>
+                    <button type="button" class="btn btn-outline-warning btn-sm">Media</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm">Difícil</button>
                 </div>
             </div>
         </div>
-
+        
         <div id="design-grid" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for diseno in disenos|default([]) %}
             <div class="col">
@@ -317,7 +312,6 @@
             if (currentIndex >= designCards.length) {
                 loadMoreBtn.style.display = 'none';
             } else {
-                // Usamos 'block' para que el botón siga siendo visible
                 loadMoreBtn.style.display = 'block'; 
             }
         }
