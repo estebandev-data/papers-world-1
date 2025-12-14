@@ -34,18 +34,25 @@
         }
 
         /* Lógica para mostrar/ocultar tarjetas con animación (CSS) */
-        .design-card {
-            /* IMPORTANTE: Col-x necesita display: block para que la cuadrícula funcione */
-            display: none;
+        
+        /* Contenedor de la tarjeta (columna) - Mantenemos .col/design-col-container para la cuadrícula */
+        .design-col-container {
+            display: none; /* Oculta la columna entera por defecto */
+            /* Agregamos una clase para la transición */
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s, transform 0.3s;
-            cursor: pointer; 
         }
-        .design-card.active {
-            display: block;
+        .design-col-container.active {
+            display: block; /* Muestra la columna (y la tarjeta se reubica) */
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* La tarjeta interior solo tiene estilos de hover */
+        .design-card {
+            cursor: pointer;
+            height: 100%;
         }
         .design-card:hover {
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -79,7 +86,6 @@
         /* ESTILOS DE BOTONES DE FILTRO ACTIVOS */
         .filter-btn {
             transition: all 0.2s ease;
-            /* Asegura que los botones ocupen el espacio deseado */
             display: inline-flex; 
             align-items: center;
             justify-content: center;
@@ -196,10 +202,10 @@
                                             data-filter-type="categoria" data-filter-value="Animales">Animales</button>
                                             
                                     <button type="button" class="btn btn-outline-primary btn-sm filter-btn" 
-                                            data-filter-type="categoria" data-filter-value="Vehículos">Vehículos</button>
+                                            data-filter-type="categoria" data-filter-value="Vehiculos">Vehiculos</button>
                                             
                                     <button type="button" class="btn btn-outline-primary btn-sm filter-btn" 
-                                            data-filter-type="categoria" data-filter-value="Fantasía y Personajes">Fantasía y Personajes</button>
+                                            data-filter-type="categoria" data-filter-value="Fantasia y Personajes">Fantasia y Personajes</button>
                                             
                                     <button type="button" class="btn btn-outline-primary btn-sm filter-btn" 
                                             data-filter-type="categoria" data-filter-value="Otros">Otros</button>
@@ -230,7 +236,7 @@
             
             <div id="design-grid" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
                 {% for diseno in disenos|default([]) %}
-                <div class="col">
+                <div class="col design-col-container">
                     <div class="design-card card rounded-3 shadow-sm overflow-hidden h-100" 
                         data-bs-toggle="modal" 
                         data-bs-target="#designModal"
@@ -339,7 +345,9 @@
 
     <script>
         // --- VARIABLES GLOBALES Y CONSTANTES ---
-        const designCards = Array.from(document.querySelectorAll('.design-card'));
+        // Ahora seleccionamos el contenedor de la columna para controlar la visibilidad y reordenamiento
+        const designColContainers = Array.from(document.querySelectorAll('.design-col-container'));
+        const designCards = designColContainers.map(col => col.querySelector('.design-card')); // Obtenemos las tarjetas para los datos
         const loadMoreBtn = document.getElementById('load-more-btn');
         const allFilterButtons = document.querySelectorAll('.filter-btn');
         const totalDesigns = designCards.length; 
@@ -352,22 +360,19 @@
         // --- LÓGICA DE CARGA Y PAGINACIÓN ---
         function initializeDesigns(limit) {
             // Mostrar solo las primeras 'limit' tarjetas, el resto ocultas.
-            designCards.forEach((card, index) => {
-                card.classList.remove('active');
+            designColContainers.forEach((col, index) => {
+                col.classList.remove('active');
                 if (index < limit) {
-                    card.parentElement.classList.add('active'); // Ojo: la clase .active está en el .design-card dentro del .col
-                    card.classList.add('active');
+                    col.classList.add('active'); 
                 }
             });
             currentIndex = limit; 
             checkLoadMoreVisibility();
         }
 
-        // Se mantiene la función de paginación original para el modo 'Todos'
         function cargarMasDisenos(batchSize) {
-            // Solo se ejecuta si estamos en la vista 'Todos' sin filtros de dificultad
             if (currentCategoryFilter !== 'Todos' || currentDifficultyFilter !== null) {
-                // Si hay filtros activos, no debe hacer nada la paginación, solo filtrar.
+                // Si hay filtros activos, no debe hacer nada la paginación.
                 return; 
             }
             
@@ -377,8 +382,8 @@
             setTimeout(() => {
                 const targetIndex = currentIndex + batchSize;
 
-                for (let i = currentIndex; i < designCards.length && i < targetIndex; i++) {
-                    designCards[i].classList.add('active');
+                for (let i = currentIndex; i < designColContainers.length && i < targetIndex; i++) {
+                    designColContainers[i].classList.add('active');
                 }
                 currentIndex = targetIndex;
                 loadMoreBtn.textContent = 'Cargar Más Diseños';
@@ -391,7 +396,7 @@
             // Visible solo si estamos en vista 'Todos' sin filtro de dificultad y si quedan diseños por cargar
             const isDefaultView = currentCategoryFilter === 'Todos' && currentDifficultyFilter === null;
             
-            if (isDefaultView && currentIndex < designCards.length) {
+            if (isDefaultView && currentIndex < designColContainers.length) {
                 loadMoreBtn.style.display = 'block'; 
             } else {
                 loadMoreBtn.style.display = 'none'; 
@@ -451,34 +456,37 @@
                 }
             });
             
-            // 3. Aplicar el filtro a las tarjetas y contar
+            // 3. Aplicar el filtro a las tarjetas y permitir que se reordenen
             let filteredCount = 0;
-            designCards.forEach(card => {
+            designCards.forEach((card, index) => {
+                // Usamos la tarjeta para leer los datos, pero aplicamos la clase al contenedor (col)
                 const cardCategory = card.getAttribute('data-categoria');
                 const cardDifficulty = card.getAttribute('data-dificultad');
+                const colContainer = designColContainers[index]; // El elemento .col
                 
                 // Criterio de Coincidencia (debe pasar la Categoría Y la Dificultad)
                 let matchesCategory = (currentCategoryFilter === 'Todos' || cardCategory === currentCategoryFilter);
+                // NOTA: Para que funcione, el valor en la tarjeta (ej: "Avanzado") debe coincidir exactamente con el valor del botón (ej: "Avanzado")
                 let matchesDifficulty = (currentDifficultyFilter === null || cardDifficulty === currentDifficultyFilter);
 
                 if (matchesCategory && matchesDifficulty) {
-                    card.classList.add('active');
+                    colContainer.classList.add('active'); // Muestra la columna, permitiendo el reordenamiento
                     filteredCount++;
                 } else {
-                    card.classList.remove('active');
+                    colContainer.classList.remove('active'); // Oculta la columna, eliminando el espacio
                 }
             });
             
             // 4. Actualizar estado de paginación y visibilidad del botón "Cargar Más"
             if (currentCategoryFilter === 'Todos' && currentDifficultyFilter === null) {
                  // Si vuelve a la vista "Todos", reinicializar la paginación
-                 initializeDesigns(currentIndex); // Mantiene el estado de paginación si ya cargó más
-                 checkLoadMoreVisibility(); // Revisa si el botón debe estar visible
+                 initializeDesigns(currentIndex); 
             } else {
                  // Si hay filtros, la paginación se deshabilita
-                 currentIndex = filteredCount;
-                 checkLoadMoreVisibility();
+                 currentIndex = filteredCount; // Este valor no se usa para paginación si hay filtros, pero lo reiniciamos.
             }
+            // En cualquier caso de filtro activo, ocultamos el botón de cargar más
+            checkLoadMoreVisibility(); 
         }
 
         // --- INICIALIZACIÓN Y LISTENERS ---
@@ -518,6 +526,8 @@
                 const diffSpan = document.getElementById('modal-dificultad');
                 diffSpan.className = 'fw-bold'; 
                 const diffLower = dificultad.toLowerCase();
+                // Nota: Usamos includes para manejar la tilde en "Fácil" si la tuviéramos en el dato, 
+                // pero ya no es necesario dado que el botón usa el valor literal del data-dificultad.
                 if (diffLower.includes('fácil')) {
                     diffSpan.classList.add('text-success');
                 } else if (diffLower.includes('intermedio') || diffLower.includes('media')) {
