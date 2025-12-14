@@ -74,6 +74,22 @@
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
             color: white;
         }
+
+        /* Estilo para el carrusel tipo banner */
+        .carousel-banner {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .carousel-banner .ratio {
+            --bs-aspect-ratio: 35%; /* Esto hace el video más ancho y angosto */
+        }
+
+        @media (max-width: 768px) {
+            .carousel-banner .ratio {
+                --bs-aspect-ratio: 56.25%; /* En móviles mantiene proporción 16:9 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -81,32 +97,32 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top" style="z-index: 20;">
             <div class="container-fluid container-lg px-4">
-                <a class="navbar-brand text-paper-primary fw-bold fs-4" href="{{ url_for('index') }}">Paper's World</a>
+                <a class="navbar-brand text-paper-primary fw-bold fs-4" href="#">Paper's World</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
+                            <a class="nav-link" href="#">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active text-paper-primary fw-bold" aria-current="page" href="{{ url_for('disenos') }}">Diseños</a>
+                            <a class="nav-link active text-paper-primary fw-bold" aria-current="page" href="#">Diseños</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('personalizacion') }}">Personalización</a>
+                            <a class="nav-link" href="#">Personalización</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('aprende') }}">Aprende</a>
+                            <a class="nav-link" href="#">Aprende</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('clases') }}">Clases</a>
+                            <a class="nav-link" href="#">Clases</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('feedback') }}">Comentarios</a>
+                            <a class="nav-link" href="#">Comentarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('tienda') }}">Tienda</a>
+                            <a class="nav-link" href="#">Tienda</a>
                         </li>
                     </ul>
                     <div class="d-flex">
@@ -126,57 +142,57 @@
             </div>
         </div>
 
-        <div class="row mx-0 mb-5 justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 px-0"> 
-                <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="ratio ratio-16x9" style="min-height: 250px; background-color: #e2e8f0;"> 
-                                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&controls=1&loop=1&playlist=dQw4w9WgXcQ" 
-                                        title="Video Promocional Paper's World" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen 
-                                        style="border: 0;"></iframe>
-                            </div>
-                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2">
-                                <h5 class="fw-bold">¡Mira cómo se construyen nuestros diseños!</h5>
-                                <p>Plantillas fáciles de entender para todos los niveles.</p>
-                            </div>
+        <!-- Carrusel tipo banner ancho y angosto -->
+        <div class="carousel-banner mb-5">
+            <div id="videoCarousel" class="carousel slide shadow-lg" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="ratio" style="background-color: #e2e8f0;"> 
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&controls=1&loop=1&playlist=dQw4w9WgXcQ" 
+                                    title="Video Promocional Paper's World" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen 
+                                    style="border: 0;"></iframe>
+                        </div>
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2">
+                            <h5 class="fw-bold">¡Mira cómo se construyen nuestros diseños!</h5>
+                            <p>Plantillas fáciles de entender para todos los niveles.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="container my-5 px-4">
             
+            <!-- Sección de filtros centrados -->
             <div class="row mb-5 justify-content-center">
                 <div class="col-12 col-lg-10">
                     
-                    <div class="row mb-3">
-                        <div class="col-12 col-md-6 text-center text-md-start">
-                            <h5 class="fw-bold">Filtrar por Clasificación:</h5>
-                        </div>
-                        <div class="col-12 col-md-6 text-center text-md-start">
-                            <h5 class="fw-bold">Filtrar por Dificultad:</h5>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-12 col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
-                            <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Clasificación">
-                                <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ (disenos|default([])|length) }})</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm">Vehículos</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm">Fantasía y Personajes</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm">Otros</button>
+                    <div class="row g-4">
+                        <!-- Filtro por Clasificación -->
+                        <div class="col-12 col-md-6">
+                            <div class="text-center">
+                                <h5 class="fw-bold mb-3">Filtrar por Clasificación:</h5>
+                                <div class="d-flex flex-wrap gap-2 justify-content-center" role="group" aria-label="Filtros de Clasificación">
+                                    <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos (24)</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Vehículos</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Fantasía</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Otros</button>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="col-12 col-md-6 d-flex justify-content-center">
-                             <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Dificultad">
-                                <button type="button" class="btn btn-outline-success btn-sm">Fácil</button>
-                                <button type="button" class="btn btn-outline-warning btn-sm">Intermedio</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">Avanzado</button>
+                        <!-- Filtro por Dificultad -->
+                        <div class="col-12 col-md-6">
+                            <div class="text-center">
+                                <h5 class="fw-bold mb-3">Filtrar por Dificultad:</h5>
+                                <div class="d-flex flex-wrap gap-2 justify-content-center" role="group" aria-label="Filtros de Dificultad">
+                                    <button type="button" class="btn btn-outline-success btn-sm">Fácil</button>
+                                    <button type="button" class="btn btn-outline-warning btn-sm">Intermedio</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm">Avanzado</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,42 +200,125 @@
                 </div>
             </div>
             
+            <!-- Grid de diseños de ejemplo -->
             <div id="design-grid" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-                {% for diseno in disenos|default([]) %}
+                <!-- Tarjeta de ejemplo 1 -->
                 <div class="col">
                     <div class="design-card card rounded-3 shadow-sm overflow-hidden h-100" 
                         data-bs-toggle="modal" 
                         data-bs-target="#designModal"
-                        data-nombre="{{ diseno.nombre|default('Nombre Desconocido') }}"
-                        data-categoria="{{ diseno.categoria|default('N/A') }}"
-                        data-dificultad="{{ diseno.dificultad|default('Media') }}"
-                        data-imagen="{{ url_for('static', filename='imagenes/' + diseno.imagen_url)|default('') }}"> 
+                        data-nombre="Dragón de Papel"
+                        data-categoria="Fantasía"
+                        data-dificultad="Avanzado"
+                        data-imagen="https://placehold.co/400x300/6366f1/ffffff?text=Dragón"> 
                         
                         <div class="w-100" style="height: 10rem; background-color: #f3f4f6;">
-                            <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url)|default('') }}" 
-                                    onerror="this.onerror=null; this.src='https://placehold.co/400x300/e5e7eb/4b5563?text=Sin+Imagen';" 
-                                    alt="Diseño de {{ diseno.nombre|default('Diseño') }}" 
+                            <img src="https://placehold.co/400x300/6366f1/ffffff?text=Dragón" 
+                                    alt="Diseño de Dragón de Papel" 
                                     class="w-100 h-100 object-fit-cover">
                         </div>
                         
                         <div class="card-body p-3">
-                            <h3 class="fs-6 fw-bold text-dark mb-1">{{ diseno.nombre|default('Diseño Sin Nombre') }}</h3>
+                            <h3 class="fs-6 fw-bold text-dark mb-1">Dragón de Papel</h3>
                             <p class="small text-muted mb-1">
-                                Categoría: {{ diseno.categoria|default('N/A') }}
+                                Categoría: Fantasía
                             </p>
                             <p class="small text-muted mb-0">
-                                Dificultad: <span class="fw-medium text-danger">{{ diseno.dificultad|default('N/A') }}</span>
+                                Dificultad: <span class="fw-medium text-danger">Avanzado</span>
                             </p>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+
+                <!-- Tarjeta de ejemplo 2 -->
+                <div class="col">
+                    <div class="design-card card rounded-3 shadow-sm overflow-hidden h-100" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#designModal"
+                        data-nombre="Elefante"
+                        data-categoria="Animales"
+                        data-dificultad="Intermedio"
+                        data-imagen="https://placehold.co/400x300/22c55e/ffffff?text=Elefante"> 
+                        
+                        <div class="w-100" style="height: 10rem; background-color: #f3f4f6;">
+                            <img src="https://placehold.co/400x300/22c55e/ffffff?text=Elefante" 
+                                    alt="Diseño de Elefante" 
+                                    class="w-100 h-100 object-fit-cover">
+                        </div>
+                        
+                        <div class="card-body p-3">
+                            <h3 class="fs-6 fw-bold text-dark mb-1">Elefante</h3>
+                            <p class="small text-muted mb-1">
+                                Categoría: Animales
+                            </p>
+                            <p class="small text-muted mb-0">
+                                Dificultad: <span class="fw-medium text-warning">Intermedio</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de ejemplo 3 -->
+                <div class="col">
+                    <div class="design-card card rounded-3 shadow-sm overflow-hidden h-100" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#designModal"
+                        data-nombre="Avión Clásico"
+                        data-categoria="Vehículos"
+                        data-dificultad="Fácil"
+                        data-imagen="https://placehold.co/400x300/3b82f6/ffffff?text=Avión"> 
+                        
+                        <div class="w-100" style="height: 10rem; background-color: #f3f4f6;">
+                            <img src="https://placehold.co/400x300/3b82f6/ffffff?text=Avión" 
+                                    alt="Diseño de Avión Clásico" 
+                                    class="w-100 h-100 object-fit-cover">
+                        </div>
+                        
+                        <div class="card-body p-3">
+                            <h3 class="fs-6 fw-bold text-dark mb-1">Avión Clásico</h3>
+                            <p class="small text-muted mb-1">
+                                Categoría: Vehículos
+                            </p>
+                            <p class="small text-muted mb-0">
+                                Dificultad: <span class="fw-medium text-success">Fácil</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Puedes agregar más tarjetas de ejemplo aquí -->
+                <div class="col">
+                    <div class="design-card card rounded-3 shadow-sm overflow-hidden h-100" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#designModal"
+                        data-nombre="Casa Tradicional"
+                        data-categoria="Otros"
+                        data-dificultad="Fácil"
+                        data-imagen="https://placehold.co/400x300/f59e0b/ffffff?text=Casa"> 
+                        
+                        <div class="w-100" style="height: 10rem; background-color: #f3f4f6;">
+                            <img src="https://placehold.co/400x300/f59e0b/ffffff?text=Casa" 
+                                    alt="Diseño de Casa Tradicional" 
+                                    class="w-100 h-100 object-fit-cover">
+                        </div>
+                        
+                        <div class="card-body p-3">
+                            <h3 class="fs-6 fw-bold text-dark mb-1">Casa Tradicional</h3>
+                            <p class="small text-muted mb-1">
+                                Categoría: Otros
+                            </p>
+                            <p class="small text-muted mb-0">
+                                Dificultad: <span class="fw-medium text-success">Fácil</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="text-center mt-5">
                 <button id="load-more-btn" 
-                        onclick="cargarMasDisenos({{ tamano_lote|default(8) }})"
-                        class="btn bg-paper-secondary text-white fw-semibold rounded-pill px-5 py-2 shadow-lg transition duration-150 transform hover:scale-105" 
+                        onclick="cargarMasDisenos(8)"
+                        class="btn bg-paper-secondary text-white fw-semibold rounded-pill px-5 py-2 shadow-lg" 
                         style="--bs-btn-hover-bg: #047857;">
                     Cargar Más Diseños
                 </button>
@@ -246,6 +345,7 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Modal de Detalles -->
     <div class="modal fade" id="designModal" tabindex="-1" aria-labelledby="designModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -281,7 +381,7 @@
                                 *Nota: Aquí podrías añadir una descripción detallada del diseño.
                             </p>
                             
-                            <a id="modal-comprar" href="{{ url_for('tienda') }}" class="btn bg-paper-secondary text-white fw-bold w-100 py-2 mt-3" style="--bs-btn-hover-bg: #047857;">
+                            <a id="modal-comprar" href="#" class="btn bg-paper-secondary text-white fw-bold w-100 py-2 mt-3" style="--bs-btn-hover-bg: #047857;">
                                 <i class="fas fa-shopping-cart me-2"></i> Comprar Plantilla
                             </a>
                         </div>
@@ -337,7 +437,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const batchSize = {{ tamano_lote|default(8) }};
+            const batchSize = 8;
             initializeDesigns(batchSize);
             
             // LÓGICA PARA LLENAR EL MODAL
