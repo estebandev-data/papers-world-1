@@ -119,11 +119,19 @@
 
     <main class="container-fluid px-0"> 
         
-        <div class="row mb-5 mx-0 justify-content-center">
-            <div class="col-12 px-0"> <div id="videoCarousel" class="carousel slide overflow-hidden shadow-lg" data-bs-ride="carousel">
+        <div class="container my-5 px-4">
+             <div class="text-center text-md-start mb-4">
+                <h1 class="fs-1 fw-bolder text-dark mb-2">Explora Nuestra Colección de Diseños</h1>
+                <p class="lead text-muted">Diseños listos para armar. Haz clic para ver los detalles y las plantillas disponibles.</p>
+            </div>
+        </div>
+
+        <div class="row mx-0 mb-5 justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 px-0"> 
+                <div id="videoCarousel" class="carousel slide rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="ratio ratio-16x9" style="min-height: 400px; background-color: #e2e8f0;"> 
+                            <div class="ratio ratio-16x9" style="min-height: 250px; background-color: #e2e8f0;"> 
                                 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&controls=1&loop=1&playlist=dQw4w9WgXcQ" 
                                         title="Video Promocional Paper's World" 
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -140,25 +148,21 @@
             </div>
         </div>
         <div class="container my-5 px-4">
-             <div class="text-center text-md-start mb-5">
-                <h1 class="fs-1 fw-bolder text-dark mb-2">Explora Nuestra Colección de Diseños</h1>
-                <p class="lead text-muted">Diseños listos para armar. Haz clic para ver los detalles y las plantillas disponibles.</p>
-            </div>
             
             <div class="row mb-5 justify-content-center">
                 <div class="col-12 col-lg-10">
                     
                     <div class="row mb-3">
-                        <div class="col-12 col-md-6">
-                            <h5 class="fw-bold text-center text-md-start">Filtrar por Clasificación:</h5>
+                        <div class="col-12 col-md-6 text-center text-md-start">
+                            <h5 class="fw-bold">Filtrar por Clasificación:</h5>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <h5 class="fw-bold text-center text-md-start">Filtrar por Dificultad:</h5>
+                        <div class="col-12 col-md-6 text-center text-md-start">
+                            <h5 class="fw-bold">Filtrar por Dificultad:</h5>
                         </div>
                     </div>
                     
                     <div class="row">
-                        <div class="col-12 col-md-6 mb-4 mb-md-0 d-flex justify-content-center justify-content-md-start">
+                        <div class="col-12 col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
                             <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Clasificación">
                                 <button type="button" class="btn btn-paper-primary btn-sm text-white">Todos ({{ (disenos|default([])|length) }})</button>
                                 <button type="button" class="btn btn-outline-primary btn-sm">Animales</button>
@@ -168,7 +172,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start">
+                        <div class="col-12 col-md-6 d-flex justify-content-center">
                              <div class="d-flex flex-wrap gap-2" role="group" aria-label="Filtros de Dificultad">
                                 <button type="button" class="btn btn-outline-success btn-sm">Fácil</button>
                                 <button type="button" class="btn btn-outline-warning btn-sm">Intermedio</button>
