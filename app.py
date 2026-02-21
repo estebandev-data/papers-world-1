@@ -9,15 +9,21 @@ app = Flask(__name__)
 # --- CONFIGURACIÓN DE BASE DE DATOS ---
 
 # 1. URL de respaldo (Corregida con ceros en la contraseña)
-# Asegúrate de que esta URL sea la "External Database URL" de tu imagen de Render
-LOCAL_POSTGRES_URL = "postgresql://papers_world_db_oz2j_user:XkBm9Sr3APkBKvlk10y3hjGd0kW39g601@dpg-d6d3gb4tgctc73eth1r0-a.oregon-postgres.render.com/papers_world_db_oz2j"
+# --- CONFIGURACIÓN DE BASE DE DATOS ---
 
-# 2. Obtener la URL del entorno de Render
-database_url = os.environ.get('DATABASE_URL') or LOCAL_POSTGRES_URL
+# Pegamos la URL tal cual te la da Render por defecto
+DEFAULT_RENDER_URL = "postgresql://papers_world_db_oz2j_user:XkBm9Sr3APkBKvklOy3hjGdOkW39g6O1@dpg-d6d3gb4tgctc73eth1r0-a/papers_world_db_oz2j"
 
-# IMPORTANTE: Render a veces entrega 'postgres://', pero SQLAlchemy necesita 'postgresql://'
-if database_url and database_url.startswith("postgres://"):
+# Obtenemos la URL del entorno o usamos la de defecto
+database_url = os.environ.get('DATABASE_URL') or DEFAULT_RENDER_URL
+
+# CORRECCIÓN DE PROTOCOLO: Si empieza con postgres:// lo cambiamos a postgresql://
+if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+# CORRECCIÓN DE HOSTNAME: Para que conecte desde fuera de Render
+if "@dpg-d6d3gb4tgctc73eth1r0-a/" in database_url:
+    database_url = database_url.replace("@dpg-d6d3gb4tgctc73eth1r0-a/", "@dpg-d6d3gb4tgctc73eth1r0-a.oregon-postgres.render.com/")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
