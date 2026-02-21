@@ -27,7 +27,7 @@
             display: none; 
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
 
         .design-col-container.active {
@@ -40,6 +40,7 @@
             cursor: pointer;
             height: 100%;
             transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
         }
 
         .design-card:hover {
@@ -47,24 +48,6 @@
             transform: translateY(-5px);
         }
 
-        .whatsapp-float {
-            position: fixed;
-            bottom: 1.25rem; 
-            right: 1.25rem; 
-            z-index: 1050; 
-            width: 3.5rem; 
-            height: 3.5rem; 
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            background-color: var(--paper-secondary);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-decoration: none;
-        }
-
-        /* Estilos de botones activos */
         .filter-btn.active {
             background-color: var(--paper-primary) !important;
             color: white !important;
@@ -104,9 +87,10 @@
                 <div class="d-flex flex-wrap gap-2 justify-content-center">
                     <button class="btn btn-outline-primary btn-sm filter-btn active" data-filter-type="categoria" data-filter-value="Todos">Todos</button>
                     <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Animales">Animales</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Vehiculos">Vehículos</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Fantasia y Personajes">Fantasía</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Otros">Otros</button>
+                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Vehículos">Vehículos</button>
+                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Personajes">Personajes</button>
+                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Arquitectura">Arquitectura</button>
+                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Fantasía">Fantasía</button>
                 </div>
             </div>
             <div class="col-md-6 text-center">
@@ -115,6 +99,7 @@
                     <button class="btn btn-outline-success btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Fácil">Fácil</button>
                     <button class="btn btn-outline-warning btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Intermedio">Intermedio</button>
                     <button class="btn btn-outline-danger btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Avanzado">Avanzado</button>
+                    <button class="btn btn-outline-dark btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Experto">Experto</button>
                 </div>
             </div>
         </div>
@@ -127,6 +112,7 @@
                      data-nombre="{{ diseno.nombre }}"
                      data-categoria="{{ diseno.categoria }}"
                      data-dificultad="{{ diseno.dificultad }}"
+                     data-precio="{{ diseno.precio }}"
                      data-imagen="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}"> 
                     
                     <div style="height: 200px; background-color: #eee;">
@@ -144,20 +130,22 @@
         </div>
 
         <div class="text-center mt-5">
-            <button id="load-more-btn" class="btn bg-paper-secondary text-white rounded-pill px-5">Cargar Más</button>
+            <button id="load-more-btn" class="btn bg-paper-secondary text-white rounded-pill px-5 shadow">Cargar Más</button>
         </div>
     </main>
 
     <div class="modal fade" id="designModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content border-0 shadow-lg">
                 <div class="modal-body p-0">
                     <img id="modal-imagen" src="" class="w-100 rounded-top">
                     <div class="p-4">
-                        <h4 id="modal-nombre" class="fw-bold"></h4>
-                        <p id="modal-info" class="text-muted"></p>
-                        <hr>
-                        <a href="{{ url_for('tienda') }}" class="btn btn-primary w-100">Ver en Tienda</a>
+                        <h4 id="modal-nombre" class="fw-bold mb-1"></h4>
+                        <p id="modal-info" class="text-muted mb-3"></p>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="badge bg-light text-dark border p-2 px-3 fs-6">Precio: $<span id="modal-precio"></span></span>
+                        </div>
+                        <a href="{{ url_for('tienda') }}" class="btn btn-primary w-100 py-2 fw-bold">Ver en Tienda</a>
                     </div>
                 </div>
             </div>
@@ -169,44 +157,51 @@
     <script>
         const designCols = Array.from(document.querySelectorAll('.design-col-container'));
         const loadMoreBtn = document.getElementById('load-more-btn');
-        const INITIAL_LIMIT = {{ tamano_lote | default(8) }};
         
-        let currentIndex = 0;
+        // CORRECCIÓN: Parseamos el valor de Jinja correctamente para evitar errores de JS
+        const INITIAL_LIMIT = parseInt("{{ tamano_lote|default(8) }}");
+        
+        let currentIndex = INITIAL_LIMIT;
         let currentCat = 'Todos';
         let currentDiff = null;
 
         function showDesigns() {
-            let visibleCount = 0;
-            designCols.forEach((col, index) => {
+            let matchesFound = 0;
+            let currentlyVisible = 0;
+
+            designCols.forEach((col) => {
                 const card = col.querySelector('.design-card');
                 const matchCat = (currentCat === 'Todos' || card.dataset.categoria === currentCat);
                 const matchDiff = (!currentDiff || card.dataset.dificultad === currentDiff);
 
                 if (matchCat && matchDiff) {
+                    matchesFound++;
+                    // Lógica de paginación solo si no hay filtros específicos activos
                     if (currentCat === 'Todos' && !currentDiff) {
-                        // Si no hay filtros, aplicamos paginación
-                        col.classList.toggle('active', visibleCount < currentIndex + INITIAL_LIMIT);
+                        if (currentlyVisible < currentIndex) {
+                            col.classList.add('active');
+                            currentlyVisible++;
+                        } else {
+                            col.classList.remove('active');
+                        }
                     } else {
-                        // Si hay filtros, mostramos todos los que coincidan
+                        // Si hay filtros, mostramos todos los resultados que coincidan
                         col.classList.add('active');
+                        currentlyVisible++;
                     }
-                    visibleCount++;
                 } else {
                     col.classList.remove('active');
                 }
             });
 
-            // Ocultar botón si ya se mostraron todos o hay filtros activos
-            loadMoreBtn.style.display = (currentCat === 'Todos' && !currentDiff && visibleCount < designCols.length) ? 'inline-block' : 'none';
+            // Ocultar botón si ya se mostraron todos o hay filtros aplicados
+            const hasActiveFilters = currentCat !== 'Todos' || currentDiff !== null;
+            if (hasActiveFilters || currentlyVisible >= matchesFound || matchesFound <= INITIAL_LIMIT) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
         }
-
-        // Inicializar
-        showDesigns();
-
-        loadMoreBtn.addEventListener('click', () => {
-            currentIndex += INITIAL_LIMIT;
-            showDesigns();
-        });
 
         // Eventos de Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -216,28 +211,43 @@
 
                 if (type === 'categoria') {
                     currentCat = val;
-                    // Resetear botones de categoría
                     document.querySelectorAll('[data-filter-type="categoria"]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
                 } else {
-                    currentDiff = (currentDiff === val) ? null : val;
-                    // Resetear botones de dificultad
-                    document.querySelectorAll('[data-filter-type="dificultad"]').forEach(b => b.classList.remove('active'));
+                    // Toggle para dificultad
+                    if (currentDiff === val) {
+                        currentDiff = null;
+                        this.classList.remove('active');
+                    } else {
+                        currentDiff = val;
+                        document.querySelectorAll('[data-filter-type="dificultad"]').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    }
                 }
-
-                if (currentDiff || currentCat !== 'Todos') this.classList.add('active');
-                if (currentCat === 'Todos' && type === 'categoria') this.classList.add('active');
-
+                
+                // Al filtrar, reiniciamos el índice de "Cargar más"
+                currentIndex = INITIAL_LIMIT;
                 showDesigns();
             });
         });
 
-        // Lógica Modal
-        document.getElementById('designModal').addEventListener('show.bs.modal', function (e) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentIndex += INITIAL_LIMIT;
+            showDesigns();
+        });
+
+        // Lógica Modal mejorada
+        const designModal = document.getElementById('designModal');
+        designModal.addEventListener('show.bs.modal', function (e) {
             const card = e.relatedTarget;
             document.getElementById('modal-nombre').innerText = card.dataset.nombre;
             document.getElementById('modal-imagen').src = card.dataset.imagen;
-            document.getElementById('modal-info').innerText = `${card.dataset.categoria} - Dificultad: ${card.dataset.dificultad}`;
+            document.getElementById('modal-precio').innerText = card.dataset.precio;
+            document.getElementById('modal-info').innerText = `${card.dataset.categoria} • Nivel ${card.dataset.dificultad}`;
         });
+
+        // Ejecución inicial
+        showDesigns();
     </script>
 </body>
 </html>
