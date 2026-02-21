@@ -4,112 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aprende Papercraft | Paper's World</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <style>
-    <!-- Configuración para usar la fuente Inter -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb; /* Fondo muy claro */
+            background-color: #f7f9fb;
         }
-        /* Colores primarios y secundarios redefinidos para Tailwind */
-        .primary-color { background-color: #2563eb; } /* Azul Intenso */
-        .secondary-color { background-color: #059669; } /* Verde Intenso */
+        .primary-color { background-color: #2563eb; }
+        .secondary-color { background-color: #059669; }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <!-- Navegacion Header -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <a href="{{ url_for('index') }}" class="text-2xl font-extrabold text-[#2563eb] tracking-tight">
-            Paper's World
-        </a>
-        
-        <div class="hidden md:flex space-x-6 items-center">
-            <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-[#2563eb]">Inicio</a>
-            <a href="{{ url_for('disenos') }}" class="text-gray-600 hover:text-[#2563eb]">Diseños</a>
-            <a href="{{ url_for('personalizacion') }}" class="text-gray-600 hover:text-[#2563eb]">Personalización</a>
-            <a href="{{ url_for('aprende') }}" class="text-gray-900 font-semibold border-b-2 border-[#2563eb]">Aprende</a>
-            <a href="{{ url_for('clases') }}" class="text-gray-600 hover:text-[#2563eb]">Clases</a>
-            <a href="{{ url_for('feedback') }}" class="text-gray-600 hover:text-[#2563eb]">Comentarios</a>
-            <a href="{{ url_for('tienda') }}" class="text-gray-600 hover:text-[#2563eb]">Tienda</a>
-        </div>
-        
-        <div class="flex items-center space-x-4">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" target="_blank" class="btn btn-outline-secondary me-2">Encuesta</a>
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="{{ url_for('index') }}" class="text-2xl font-extrabold text-[#2563eb] tracking-tight">
+                Paper's World
+            </a>
+            
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-[#2563eb]">Inicio</a>
+                <a href="{{ url_for('disenos') }}" class="text-gray-600 hover:text-[#2563eb]">Diseños</a>
+                <a href="{{ url_for('personalizacion') }}" class="text-gray-600 hover:text-[#2563eb]">Personalización</a>
+                <a href="{{ url_for('aprende') }}" class="text-gray-900 font-semibold border-b-2 border-[#2563eb]">Aprende</a>
+                <a href="{{ url_for('clases') }}" class="text-gray-600 hover:text-[#2563eb]">Clases</a>
+                <a href="{{ url_for('feedback') }}" class="text-gray-600 hover:text-[#2563eb]">Comentarios</a>
+                <a href="{{ url_for('tienda') }}" class="text-gray-600 hover:text-[#2563eb]">Tienda</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc24rZVhFwx9PqqpqRjjNjQpUvUBAKdCk3vQDLZrIIxxabrZQ/viewform?usp=sf_link" 
+                   target="_blank" 
+                   class="hidden sm:block border border-gray-300 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+                    Encuesta
+                </a>
 
-            <button id="menu-button" class="md:hidden p-2 text-gray-600 hover:text-[#2563eb] focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
+                <button id="menu-button" class="md:hidden p-2 text-gray-600 hover:text-[#2563eb] focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t">
+            <div class="px-4 pt-2 pb-3 space-y-1 sm:px-3">
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('index') }}">Inicio</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('disenos') }}">Diseños</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('personalizacion') }}">Personalización</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 bg-gray-100 border-l-4 border-[#2563eb]" href="{{ url_for('aprende') }}">Aprende</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('clases') }}">Clases</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('feedback') }}">Comentarios</a>
+                <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('tienda') }}">Tienda</a>
+            </div>
         </div>
-    </nav>
-    
-    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t">
-        <div class="px-4 pt-2 pb-3 space-y-1 sm:px-3">
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('index') }}">Inicio</a>
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('disenos') }}">Diseños</a>
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('personalizacion') }}">Personalización</a>
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 bg-gray-100 border-l-4 border-[#2563eb]" href="{{ url_for('aprende') }}">Aprende</a>
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('clases') }}">Clases</a>
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('feedback') }}">Comentarios</a>
-            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50" href="{{ url_for('tienda') }}">Tienda</a>
-        </div>
-    </div>
-</header>
-    <!-- Contenido Principal -->
+    </header>
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <!-- Hero Título -->
         <div class="text-center mb-12">
-            <h1 class="text-5xl font-extrabold text-gray-900 mb-3">
-                Convierte Papel en Arte 
-            </h1>
+            <h1 class="text-5xl font-extrabold text-gray-900 mb-3">Convierte Papel en Arte</h1>
             <p class="text-xl text-gray-500 max-w-3xl mx-auto">
                 Accede a tutoriales, guías descargables y servicios especializados para llevar tu papercraft al siguiente nivel.
             </p>
         </div>
 
-        <!-- Sección de Servicios y Guias 2 Columnas -->
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <!-- Columna 1: Formulario de Cotizacion -->
             <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#2563eb] h-full">
                 <h2 class="text-2xl font-bold text-[#2563eb] mb-4">Cotización de Modelado 3D</h2>
                 <p class="text-gray-600 mb-6">
-                    Envíanos el link de tu modelo 3D (STL, OBJ, etc.) y lo convertiremos en una plantilla de papercraft lista para armar.
+                    Envíanos el link de tu modelo 3D y lo convertiremos en una plantilla lista para armar.
                 </p>
                 <form action="{{ url_for('aprende') }}" method="POST" class="space-y-4">
-                    <!-- campo nombre -->
-                    <div>
-                        <input type="text" name="nombre_cotizacion" placeholder="Nombre (Obligatorio)" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] transition duration-150" />
-                    </div>
-                    <!-- Campo link_modelo -->
-                    <div>
-                        <input type="text" name="link_modelo" placeholder="Link de Modelo 3D / Descripción" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] transition duration-150" />
-                    </div>
-                    <!-- Campo email_cotizacion -->
-                    <div>
-                        <input type="email" name="email_cotizacion" placeholder="Email (Obligatorio)" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] transition duration-150" />
-                    </div>
-                    <button type="submit" class="primary-color text-white font-semibold w-full py-3 rounded-lg hover:bg-blue-700 transition duration-150 shadow-md">
+                    <input type="text" name="nombre_cotizacion" placeholder="Nombre (Obligatorio)" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563eb] outline-none" />
+                    <input type="text" name="link_modelo" placeholder="Link de Modelo 3D / Descripción" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563eb] outline-none" />
+                    <input type="email" name="email_cotizacion" placeholder="Email (Obligatorio)" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2563eb] outline-none" />
+                    <button type="submit" class="primary-color text-white font-semibold w-full py-3 rounded-lg hover:bg-blue-700 transition shadow-md">
                         Solicitar Cotización Rápida
                     </button>
                 </form>
             </div>
 
-            <!-- Columna 2: Recursos Manual/Guia -->
             <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#059669] flex flex-col justify-between">
                 <div>
                     <h2 class="text-2xl font-bold text-[#059669] mb-3">Manual de Papercraft para Principiantes</h2>
-                    <p class="text-gray-600 mb-4">
-                        Nuestra guía completa (2025) con técnicas fundamentales, tipos de papel, herramientas esenciales y trucos profesionales.
-                    </p>
+                    <p class="text-gray-600 mb-4">Nuestra guía completa (2025) con técnicas fundamentales y trucos profesionales.</p>
                     <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6 ml-4">
                         <li>Dominio de cortes y plegados curvos.</li>
                         <li>Consejos para uniones invisibles.</li>
@@ -117,120 +99,82 @@
                     </ul>
                 </div>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                <a href="{{ url_for('static', filename='test.pdf') }}" class="secondary-color text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-150 shadow-md">
-                   Descargar Guía Completa (PDF)
-                </a>
+                    <a href="{{ url_for('static', filename='test.pdf') }}" class="secondary-color text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-md">
+                       Descargar Guía Completa (PDF)
+                    </a>
                     <p class="text-sm text-gray-500">no requiere registro</p>
                 </div>
             </div>
         </section>
 
-        <!-- Videos Tutoriales -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-gray-800 border-b pb-2 mb-6">Videos Paso a Paso</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <!-- Video 1 -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-[1.02] transition duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <iframe src="https://youtu.be/db90YDNjnWM?si=pCjfGW9bVpUJvbKa " title="Video de Youtube Básico" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-48"></iframe>
-                    </div>
+                    <iframe src="https://www.youtube.com/embed/db90YDNjnWM" title="Video 1" allowfullscreen class="w-full h-48"></iframe>
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-[#2563eb]">1. Conceptos Básicos y Herramientas</h3>
-                        <p class="text-sm text-gray-500 mt-1">Tu primer contacto con el papercraft y ensamblaje de figuras simples.</p>
+                        <h3 class="text-lg font-semibold text-[#2563eb]">1. Conceptos Básicos</h3>
+                        <p class="text-sm text-gray-500 mt-1">Tu primer contacto con el papercraft.</p>
                     </div>
                 </div>
 
-                <!-- Video 2 -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-[1.02] transition duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <iframe src="https://youtu.be/2sFczigWppk?si=16vG7xyvcJfgC5pl" title="Video de Youtube Intermedio" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-48"></iframe>
-                    </div>
+                    <iframe src="https://www.youtube.com/embed/2sFczigWppk" title="Video 2" allowfullscreen class="w-full h-48"></iframe>
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-[#2563eb]">2. Montaje de Formas Curvas</h3>
-                        <p class="text-sm text-gray-500 mt-1">Técnicas para lograr transiciones suaves y modelos orgánicos.</p>
+                        <h3 class="text-lg font-semibold text-[#2563eb]">2. Montaje de Curvas</h3>
+                        <p class="text-sm text-gray-500 mt-1">Técnicas para modelos orgánicos.</p>
                     </div>
                 </div>
 
-                <!-- Video 3 -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-[1.02] transition duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <iframe src="https://youtu.be/rC5ES1vmRmc?si=8PRRU3wRxI-gHco5" title="Video de Youtube Avanzado" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-48"></iframe>
-                    </div>
+                    <iframe src="https://www.youtube.com/embed/rC5ES1vmRmc" title="Video 3" allowfullscreen class="w-full h-48"></iframe>
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-[#2563eb]">3. Tutorial: Mini-Dragón Articulado</h3>
-                        <p class="text-sm text-gray-500 mt-1">Un proyecto avanzado que desafiará tus habilidades de precisión.</p>
+                        <h3 class="text-lg font-semibold text-[#2563eb]">3. Mini-Dragón Articulado</h3>
+                        <p class="text-sm text-gray-500 mt-1">Un proyecto avanzado de precisión.</p>
                     </div>
                 </div>
 
             </div>
             <div class="text-center mt-8">
-               <a href="https://www.tiktok.com/@pablo_cruz96?_r=1&_t=ZS-91U7haN6IFe" 
-                   target="_blank" 
-                   class="secondary-color text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition duration-150 shadow-lg">
+               <a href="https://www.tiktok.com/@pablo_cruz96" target="_blank" 
+                  class="secondary-color text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition shadow-lg">
                    Explora Nuestro TikTok
                 </a>
+            </div>
         </section>
 
-        <!-- Seccion PDO -->
         <section class="bg-gray-100 p-8 rounded-xl shadow-inner flex flex-col md:flex-row items-center justify-between">
             <div class="md:w-3/4 mb-4 md:mb-0">
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Visualiza Modelos 3D (Formato PDO)</h2>
-                <p class="text-gray-600">
-                    El formato PDO es clave para previsualizar tus modelos. Descarga el visor gratuito Pepakura Viewer para rotar, hacer zoom y entender cada pieza antes de cortar.
-                </p>
+                <p class="text-gray-600">Descarga el visor gratuito Pepakura Viewer para previsualizar cada pieza.</p>
             </div>
-            <div class="md:w-1/4 flex justify-end">
-                <a href="https://tamasoft.co.jp/pepakura-en/download/viewer.html" 
-                   target="_blank" 
-                   class="primary-color text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-150 shadow-md whitespace-nowrap">
-                   Descarga Pepakura Viewer
-                </a>
-            </div>
+            <a href="https://tamasoft.co.jp/pepakura-en/download/viewer.html" target="_blank" 
+               class="primary-color text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md">
+                Descarga Pepakura Viewer
+            </a>
         </section>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-            <p class="mb-2 text-lg font-semibold">Paper's World</p>
-            <p class="text-sm text-gray-400 mb-4">&copy; 2025 Todos los derechos reservados.</p>
-            <div class="space-x-4 text-sm">
-                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
-            </div>
-        </div>
+    <footer class="bg-gray-900 text-white mt-12 py-8 text-center">
+        <p class="mb-2 text-lg font-semibold">Paper's World</p>
+        <p class="text-sm text-gray-400">&copy; 2025 Todos los derechos reservados.</p>
     </footer>
 
+    <a href="https://wa.me/573144794045?text=Hola%2C%20me%20gustaria%20recibir%20soporte"
+       target="_blank" rel="noopener noreferrer" 
+       class="fixed bottom-5 right-5 z-[1050] w-16 h-16 bg-green-500 text-white text-4xl rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuButton = document.getElementById('menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-    });
-</script>
-
-<a href="https://wa.me/573144794045?text=Hola%2C%20me%20gustaria%20recibir%20soporte%20acerca%20de%20la%20plataforma"
-   target="_blank" 
-   rel="noopener noreferrer" 
-   title="Soporte por WhatsApp"
-   
-   class="fixed bottom-5 right-5 z-[1050] 
-          w-14 h-14 md:w-16 md:h-16 
-          bg-green-500 hover:bg-green-600 
-          text-white text-3xl md:text-4xl 
-          rounded-full shadow-lg hover:shadow-xl 
-          flex items-center justify-center 
-          transition duration-300 ease-in-out hover:scale-105">
-    
-    <i class="fab fa-whatsapp"></i>
-</a>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+        });
+    </script>
 </body>
 </html>
