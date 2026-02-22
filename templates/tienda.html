@@ -84,7 +84,7 @@
             {% for diseno in disenos %}
             <div class="col">
                 <div class="card h-100 card-product shadow-sm border-top border-4 border-paper-secondary">
-                    <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
+                    <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" alt="{{ diseno.nombre }}">
                          class="card-img-top object-fit-cover" 
                          alt="{{ diseno.nombre }}" 
                          style="height: 200px;"
