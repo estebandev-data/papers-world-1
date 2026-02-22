@@ -116,7 +116,7 @@
                      data-imagen="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}"> 
                     
                     <div style="height: 200px; background-color: #eee;">
-                        <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
+                        <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" alt="{{ diseno.nombre }}">
                              onerror="this.src='https://placehold.co/400x300?text=Papel'" 
                              class="w-100 h-100 object-fit-cover">
                     </div>
@@ -234,7 +234,7 @@
         loadMoreBtn.addEventListener('click', () => {
             currentIndex += INITIAL_LIMIT;
             showDesigns();
-        });
+        });  
 
         // Lógica Modal mejorada
         const designModal = document.getElementById('designModal');
