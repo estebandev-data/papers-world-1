@@ -26,14 +26,14 @@
         /* --- VIDEO HERO SECTION --- */
         .video-hero {
             position: relative;
-            height: 400px;
+            height: 450px;
             width: 100%;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
             margin-bottom: 3rem;
         }
 
@@ -47,56 +47,63 @@
             height: auto;
             transform: translate(-50%, -50%);
             z-index: -1;
-            filter: brightness(0.6); /* Oscurece el video para que el texto resalte */
+            filter: brightness(0.5) contrast(1.1);
+            object-fit: cover;
         }
 
-        /* --- IMÁGENES NÍTIDAS --- */
+        /* --- IMÁGENES NÍTIDAS Y TARJETAS --- */
         .design-card {
             cursor: pointer;
             height: 100%;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             background: white;
+            border-radius: 15px;
         }
 
         .design-card:hover {
-            box-shadow: 0 1rem 3rem rgba(0,0,0,0.1) !important;
-            transform: translateY(-8px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,0.15) !important;
+            transform: translateY(-10px);
         }
 
-        /* Contenedor para que la imagen no se vea borrosa ni estirada */
         .img-container {
             width: 100%;
-            height: 250px; /* Ajusta la altura a tu gusto */
+            height: 250px;
             overflow: hidden;
-            background-color: #f0f0f0;
+            background-color: #eee;
+            border-radius: 15px 15px 0 0;
         }
 
         .img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Mantiene la proporción sin estirar */
-            image-rendering: auto; /* Mejora la nitidez */
+            object-fit: cover; /* Evita que la imagen se vea borrosa o estirada */
+            transition: transform 0.5s ease;
         }
 
-        /* Animación de entrada */
+        .design-card:hover .img-container img {
+            transform: scale(1.1);
+        }
+
+        /* Animación de carga */
         .design-col-container {
             display: none; 
             opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
         }
 
         .design-col-container.active {
             display: block; 
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
         }
 
         .filter-btn.active {
             background-color: var(--paper-primary) !important;
             color: white !important;
             border-color: var(--paper-primary) !important;
+            box-shadow: 0 4px 10px rgba(29, 78, 216, 0.3);
         }
     </style>
 </head>
@@ -122,34 +129,34 @@
 
     <section class="video-hero">
         <video autoplay muted loop playsinline class="video-bg">
-            <source src="{{ url_for('static', filename='video_hero.mp4') }}" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-folding-a-paper-bird-24432-large.mp4" type="video/mp4">
             Tu navegador no soporta video.
         </video>
-        <div class="text-center z-1">
-            <h1 class="display-3 fw-bolder">Nuestra Colección</h1>
-            <p class="lead">Crea arte con tus propias manos</p>
+        <div class="text-center z-1 px-3">
+            <h1 class="display-3 fw-bolder">Colección Exclusiva</h1>
+            <p class="lead fs-4">Descubre el arte del papercraft con modelos nítidos y detallados</p>
+            <a href="#filtros" class="btn btn-light btn-lg rounded-pill px-5 mt-3 fw-bold text-primary shadow">Empezar a Crear</a>
         </div>
     </section>
 
-    <main class="container my-5"> 
+    <main class="container my-5" id="filtros"> 
         <div class="row mb-5 justify-content-center">
-            <div class="col-md-5 text-center mb-3">
-                <h6 class="fw-bold mb-3"><i class="fas fa-tags me-2"></i>Categoría</h6>
+            <div class="col-md-5 text-center mb-4">
+                <h6 class="fw-bold mb-3 text-secondary"><i class="fas fa-th-large me-2"></i>Filtrar por Categoría</h6>
                 <div class="d-flex flex-wrap gap-2 justify-content-center">
-                    <button class="btn btn-outline-primary btn-sm filter-btn active" data-filter-type="categoria" data-filter-value="Todos">Todos</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Animales">Animales</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Vehículos">Vehículos</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Personajes">Personajes</button>
-                    <button class="btn btn-outline-primary btn-sm filter-btn" data-filter-type="categoria" data-filter-value="Arquitectura">Arquitectura</button>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill filter-btn active" data-filter-type="categoria" data-filter-value="Todos">Todos</button>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill filter-btn" data-filter-type="categoria" data-filter-value="Animales">Animales</button>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill filter-btn" data-filter-type="categoria" data-filter-value="Vehículos">Vehículos</button>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill filter-btn" data-filter-type="categoria" data-filter-value="Personajes">Personajes</button>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill filter-btn" data-filter-type="categoria" data-filter-value="Arquitectura">Arquitectura</button>
                 </div>
             </div>
             <div class="col-md-5 text-center">
-                <h6 class="fw-bold mb-3"><i class="fas fa-layer-group me-2"></i>Dificultad</h6>
+                <h6 class="fw-bold mb-3 text-secondary"><i class="fas fa-signal me-2"></i>Nivel de Dificultad</h6>
                 <div class="d-flex flex-wrap gap-2 justify-content-center">
-                    <button class="btn btn-outline-success btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Fácil">Fácil</button>
-                    <button class="btn btn-outline-warning btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Intermedio">Intermedio</button>
-                    <button class="btn btn-outline-danger btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Avanzado">Avanzado</button>
-                    <button class="btn btn-outline-dark btn-sm filter-btn" data-filter-type="dificultad" data-filter-value="Experto">Experto</button>
+                    <button class="btn btn-outline-success btn-sm rounded-pill filter-btn" data-filter-type="dificultad" data-filter-value="Fácil">Fácil</button>
+                    <button class="btn btn-outline-warning btn-sm rounded-pill filter-btn" data-filter-type="dificultad" data-filter-value="Intermedio">Intermedio</button>
+                    <button class="btn btn-outline-danger btn-sm rounded-pill filter-btn" data-filter-type="dificultad" data-filter-value="Avanzado">Avanzado</button>
                 </div>
             </div>
         </div>
@@ -157,29 +164,27 @@
         <div id="design-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for diseno in disenos %}
             <div class="col design-col-container">
-                <div class="design-card card rounded-4 shadow-sm overflow-hidden" 
+                <div class="design-card card shadow-sm overflow-hidden" 
                      data-bs-toggle="modal" data-bs-target="#designModal"
                      data-nombre="{{ diseno.nombre }}"
                      data-categoria="{{ diseno.categoria }}"
                      data-dificultad="{{ diseno.dificultad }}"
                      data-precio="{{ diseno.precio }}"
-                     data-descripcion="Este modelo de {{ diseno.nombre }} es perfecto para decorar tu espacio. Incluye guía de armado paso a paso."
+                     data-descripcion="Modelo detallado de {{ diseno.nombre }}, ideal para coleccionistas y amantes del papercraft. Incluye instrucciones digitales."
                      data-imagen="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}"> 
                     
                     <div class="img-container">
                         <img src="{{ url_for('static', filename='imagenes/' + diseno.imagen_url) }}" 
                              alt="{{ diseno.nombre }}"
-                             onerror="this.src='https://placehold.co/600x400?text=Papel+Model'"
+                             onerror="this.src='https://placehold.co/600x400?text=Paper+Craft'"
                              loading="lazy">
                     </div>
                     <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h6 class="fw-bold m-0 text-truncate" style="max-width: 150px;">{{ diseno.nombre }}</h6>
-                            <span class="badge bg-light text-primary border">{{ diseno.precio }}</span>
+                        <h6 class="fw-bold mb-1">{{ diseno.nombre }}</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="small text-muted">{{ diseno.categoria }}</span>
+                            <span class="badge bg-light text-paper-primary border">{{ diseno.dificultad }}</span>
                         </div>
-                        <p class="small text-muted mb-0">
-                            <i class="fas fa-star text-warning me-1"></i> {{ diseno.dificultad }}
-                        </p>
                     </div>
                 </div>
             </div>
@@ -187,7 +192,7 @@
         </div>
 
         <div class="text-center mt-5">
-            <button id="load-more-btn" class="btn bg-paper-secondary text-white rounded-pill px-5 py-2 shadow-lg fw-bold">Ver Más Modelos</button>
+            <button id="load-more-btn" class="btn bg-paper-secondary text-white rounded-pill px-5 py-2 shadow-lg fw-bold">Descubrir más figuras</button>
         </div>
     </main>
 
@@ -197,7 +202,7 @@
                 <div class="modal-body p-0">
                     <div class="row g-0">
                         <div class="col-lg-6">
-                            <img id="modal-imagen" src="" class="w-100 h-100 object-fit-cover" style="min-height: 400px;">
+                            <img id="modal-imagen" src="" class="w-100 h-100 object-fit-cover" style="min-height: 450px;">
                         </div>
                         <div class="col-lg-6 p-4 p-md-5 d-flex flex-column justify-content-center">
                             <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -205,23 +210,29 @@
                             <span id="modal-badge-cat" class="badge bg-paper-primary mb-2 align-self-start"></span>
                             <h2 id="modal-nombre" class="fw-bold mb-3"></h2>
                             
-                            <div class="d-flex gap-3 mb-4">
-                                <div class="text-center p-2 bg-light rounded-3 flex-fill">
-                                    <small class="text-muted d-block">Dificultad</small>
-                                    <strong id="modal-dificultad" class="text-dark"></strong>
+                            <div class="row g-2 mb-4">
+                                <div class="col-6">
+                                    <div class="p-2 bg-light rounded-3 text-center border">
+                                        <small class="text-muted d-block">Dificultad</small>
+                                        <strong id="modal-dificultad" class="text-dark"></strong>
+                                    </div>
                                 </div>
-                                <div class="text-center p-2 bg-light rounded-3 flex-fill">
-                                    <small class="text-muted d-block">Precio</small>
-                                    <strong class="text-success">$<span id="modal-precio"></span></strong>
+                                <div class="col-6">
+                                    <div class="p-2 bg-light rounded-3 text-center border">
+                                        <small class="text-muted d-block">Precio</small>
+                                        <strong class="text-success">$<span id="modal-precio"></span></strong>
+                                    </div>
                                 </div>
                             </div>
 
-                            <h6 class="fw-bold">Descripción:</h6>
+                            <h6 class="fw-bold text-dark"><i class="fas fa-info-circle me-2"></i>Sobre este diseño:</h6>
                             <p id="modal-descripcion" class="text-muted mb-4"></p>
 
                             <div class="d-grid gap-2">
-                                <a href="{{ url_for('tienda') }}" class="btn btn-primary btn-lg rounded-pill fw-bold">Adquirir Plantilla</a>
-                                <button class="btn btn-link text-muted btn-sm" data-bs-dismiss="modal">Cerrar vista</button>
+                                <a href="{{ url_for('tienda') }}" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm">
+                                    <i class="fas fa-shopping-cart me-2"></i>Ir a la Tienda
+                                </a>
+                                <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-dismiss="modal">Volver a la galería</button>
                             </div>
                         </div>
                     </div>
@@ -266,7 +277,7 @@
             loadMoreBtn.style.display = (currentlyVisible < matchesFound) ? 'inline-block' : 'none';
         }
 
-        // Filtros
+        // Eventos de Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const type = this.dataset.filterType;
@@ -291,7 +302,7 @@
             showDesigns();
         }); 
 
-        // Lógica Modal Enriquecida
+        // Sincronización del Modal
         const designModal = document.getElementById('designModal');
         designModal.addEventListener('show.bs.modal', function (e) {
             const card = e.relatedTarget;
@@ -303,6 +314,7 @@
             document.getElementById('modal-descripcion').innerText = card.dataset.descripcion;
         });
 
+        // Inicio
         showDesigns();
     </script>
 </body>
