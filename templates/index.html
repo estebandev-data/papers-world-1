@@ -58,7 +58,6 @@
         color: white;
     }
 </style>
-    </style>
 </head>
 <body>
 
@@ -127,7 +126,6 @@
                          onerror="this.onerror=null;this.src='{{ url_for('static', filename='imagenes/default_diseno.png') }}';">
                     
                     <div class="carousel-caption text-white">
-                        <h2 class="display-4 fw-bold">{{ diseno.nombre }}</h2>
                         <p class="lead">Categoría: {{ diseno.categoria }} | Dificultad: {{ diseno.dificultad }}</p>
                         <a href="{{ url_for('disenos') }}" class="btn btn-paper-secondary btn-lg mt-3 rounded-pill px-4">Ver Diseño</a>
                     </div>
