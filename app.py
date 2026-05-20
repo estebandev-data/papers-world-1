@@ -16,7 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or LOCAL_
 
 # 2. Configuración general
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'tu_clave_secreta_aqui'
+app.config['SECRET_KEY'] 
 
 # --- FIN DE CONFIGURACIÓN DE POSTGRESQL ---
 
@@ -107,17 +107,25 @@ def index():
 # Ruta de diseños desde la DB
 @app.route('/disenos')
 def disenos():
-    todos_disenos = Diseno.query.all()
-    
-    # La consulta agrupa por la columna 'categoria' y cuenta el número de filas en ese grupo.
-    conteo_categorias = db.session.query(
-        Diseno.categoria, func.count(Diseno.id)
-    ).group_by(Diseno.categoria).all()
+    try:
+        # Obtener todos los diseños
+        todos_disenos = Diseno.query.all()
 
-    # Convertir la lista de tuplas en un diccionario para facilitar el acceso en la plantilla
-    conteo_diccionario = dict(conteo_categorias)
-    # También contamos el total de diseños
-    total_disenos = len(todos_disenos)
+        # La consulta agrupa por la columna 'categoria' y cuenta el número de filas en ese grupo.
+        conteo_categorias = db.session.query(
+            Diseno.categoria, func.count(Diseno.id)
+        ).group_by(Diseno.categoria).all()
+
+        # Convertir la lista de tuplas en un diccionario para facilitar el acceso en la plantilla
+        conteo_diccionario = dict(conteo_categorias)
+        
+    except Exception as e:
+        # Si hay un error de DB (aunque ya no debería ocurrir), inicializa las variables
+        print(f"Error al cargar datos en /disenos: {e}")
+        todos_disenos = []
+        conteo_diccionario = {}
+        
+    # El resto del código es igual:
     TAMANO_LOTE = 9
     
     return render_template(
