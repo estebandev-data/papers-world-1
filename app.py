@@ -70,7 +70,7 @@ def disenos():
         todos_disenos = []
         conteo_diccionario = {}
         
-    # El resto del código es igual:
+   
     TAMANO_LOTE = 9
     return render_template('disenos.html', disenos=todos_disenos, tamano_lote=TAMANO_LOTE, conteo_categorias=conteo_diccionario)
 
