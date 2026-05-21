@@ -1,37 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
-from datetime import datetime 
+from datetime import datetime
 from sqlalchemy import func
 
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN DE BASE DE DATOS ---
+database_url = os.environ.get('DATABASE_URL', '')
 
-# 1. URL de respaldo (Corregida con ceros en la contraseña)
-# --- CONFIGURACIÓN DE BASE DE DATOS ---
-
-# Pegamos la URL tal cual te la da Render por defecto
-DEFAULT_RENDER_URL = "postgresql://papers_world_db_oz2j_user:XkBm9Sr3APkBKvklOy3hjGdOkW39g6O1@dpg-d6d3gb4tgctc73eth1r0-a/papers_world_db_oz2j"
-
-# Obtenemos la URL del entorno o usamos la de defecto
-database_url = os.environ.get('DATABASE_URL') or DEFAULT_RENDER_URL
-
-# CORRECCIÓN DE PROTOCOLO: Si empieza con postgres:// lo cambiamos a postgresql://
+# SQLAlchemy requiere "postgresql://" en vez de "postgres://"
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
 
-# CORRECCIÓN DE HOSTNAME: Para que conecte desde fuera de Render
-if "@dpg-d6d3gb4tgctc73eth1r0-a/" in database_url:
-    database_url = database_url.replace("@dpg-d6d3gb4tgctc73eth1r0-a/", "@dpg-d6d3gb4tgctc73eth1r0-a.oregon-postgres.render.com/")
-
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] 
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'clave-local-desarrollo')
 
 db = SQLAlchemy(app)
 
-# --- MODELOS DE BASE DE DATOS ---
+# --- MODELOS ---
 
 class Diseno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,7 +51,7 @@ class SolicitudPersonalizacion(db.Model):
 @app.route('/')
 def index():
     try:
-        disenos_carrusel = Diseno.query.order_by(func.random()).limit(5).all() 
+        disenos_carrusel = Diseno.query.order_by(func.random()).limit(5).all()
     except Exception as e:
         print(f"Error: {e}")
         disenos_carrusel = []
@@ -72,19 +60,12 @@ def index():
 @app.route('/disenos')
 def disenos():
     try:
-        # Obtener todos los diseños
         todos_disenos = Diseno.query.all()
-
-        # La consulta agrupa por la columna 'categoria' y cuenta el número de filas en ese grupo.
         conteo_categorias = db.session.query(
             Diseno.categoria, func.count(Diseno.id)
         ).group_by(Diseno.categoria).all()
-
-        # Convertir la lista de tuplas en un diccionario para facilitar el acceso en la plantilla
         conteo_diccionario = dict(conteo_categorias)
-        
     except Exception as e:
-        # Si hay un error de DB (aunque ya no debería ocurrir), inicializa las variables
         print(f"Error al cargar datos en /disenos: {e}")
         todos_disenos = []
         conteo_diccionario = {}
@@ -138,7 +119,7 @@ def feedback():
         db.session.add(nuevo)
         db.session.commit()
         return redirect(url_for('feedback'))
-    comentarios = Comentario.query.order_by(Comentario.fecha.desc()).limit(6).all() 
+    comentarios = Comentario.query.order_by(Comentario.fecha.desc()).limit(6).all()
     return render_template('feedback.html', comentarios=comentarios, active_page='feedback')
 
 @app.route('/tienda')
@@ -147,6 +128,7 @@ def tienda():
     return render_template('tienda.html', disenos=todos_disenos, active_page='tienda')
 
 if __name__ == '__main__':
-    # No llamamos a inicializar_db() aquí para evitar problemas en producción
-    # ya que las tablas ya las creaste manualmente con el backup.
     app.run(debug=True)
+
+    with app.app_context():
+        db.create_all()
