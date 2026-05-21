@@ -71,7 +71,6 @@ def index():
 
 @app.route('/disenos')
 def disenos():
-<<<<<<< HEAD
     try:
         # Obtener todos los diseños
         todos_disenos = Diseno.query.all()
@@ -91,11 +90,6 @@ def disenos():
         conteo_diccionario = {}
         
     # El resto del código es igual:
-=======
-    todos_disenos = Diseno.query.all()
-    conteo_categorias = db.session.query(Diseno.categoria, func.count(Diseno.id)).group_by(Diseno.categoria).all()
-    conteo_diccionario = dict(conteo_categorias)
->>>>>>> e78771e5afcab2dce7e460956a1314f15f7283d2
     TAMANO_LOTE = 9
     return render_template('disenos.html', disenos=todos_disenos, tamano_lote=TAMANO_LOTE, conteo_categorias=conteo_diccionario)
 
